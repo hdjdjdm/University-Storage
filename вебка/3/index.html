@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>Главная</title>
+    <link rel="icon" href="./assets/icons/favicon.png" type="image/png">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img 
+            src="./assets/icons/header-cat.gif"
+            alt="header-cat" 
+            onclick="showTemporaryText(this, 'Реально классный! Подтверждаю!', 'right')" 
+            />
+            <span class="text">
+                <h1>Классный таск-менеджер!</h1>
+                created by Морзюков Максим из ПрИ-21
+            </span>
+        </div>
+    </header>
+    <nav>
+        <a class="active" href="./index.html">
+            <img src="./assets/icons/home.svg" alt="home_icon" id="svg" />
+            Главная
+        </a>
+        <a href="./projects.html">
+            <img src="./assets/icons/projects.svg" alt="projects_icon" id="svg" />
+            Проекты
+        </a>
+        <a href="./tasks.html">
+            <img src="./assets/icons/tasks.svg" alt="tasks_icon" id="svg" />
+            Список задач
+        </a>
+        <a href="./about.html">
+            <img src="./assets/icons/help.svg" alt="help_icon" id="svg" />
+            О приложении
+        </a>
+        <button>
+            <img src="./assets/icons/menu.svg" alt="menu_icon" id="svg" />
+        </button>
+    </nav>
+    <div class="sidebar">
+        <nav>
+            <a class="active" href="./index.html">
+                <img src="./assets/icons/home.svg" alt="home_icon" id="svg" />
+                Главная
+            </a>
+            <a href="./projects.html">
+                <img src="./assets/icons/projects.svg" alt="projects_icon" id="svg" />
+                Проекты
+            </a>
+            <a href="./tasks.html">
+                <img src="./assets/icons/tasks.svg" alt="tasks_icon" id="svg" />
+                Список задач
+            </a>
+            <a href="./about.html">
+                <img src="./assets/icons/help.svg" alt="help_icon" id="svg" />
+                О приложении
+            </a>
+        </nav>
+    </div>
+    <main>
+        <div class="wrap">
+            <span class="text">
+                <h1>Классный таск-менеджер!</h1>
+                Кликайте на "О приложении", что бы узнать больше!
+                Или на "Список задач" для быстрого старта!
+            </span>
+            <img src="./assets/icons/main_img.svg" alt="main_img" class="main_img" />
+        </div>
+    </main>
+
+    <script src="./scripts/ui.js"></script>
+    <script src="./scripts/showTip.js"></script>
+</body>
+
+</html>

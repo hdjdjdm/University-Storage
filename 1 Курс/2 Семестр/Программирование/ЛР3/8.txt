@@ -1,0 +1,115 @@
+/* 3.8.2. Дан ступенчатый массив, состоящий из 3 матриц: 2x2, 3x2, 2x3, заполненных случайными числами.
+Определить минимум в каждой строке матриц и вывести сумму всех таких минимумов. */
+
+using System;
+using System.Text;
+
+namespace Lr3
+{
+    class Num8
+    {
+        static void Main()
+        {
+            //Вариант
+            int variant = (14 - 1) % 3 + 1; // = 2
+            Console.WriteLine($"Вариант {variant}\n");
+
+            //Ступенчатый массив
+            int[][,] mas = new int[3][,];
+            mas[0] = new int[2, 2];
+            mas[1] = new int[3, 2];
+            mas[2] = new int[2, 3];
+
+            Random rand = new Random();
+            Console.WriteLine("Первая матрица ступенчатого массива:");
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    mas[0][i, j] = rand.Next(-99, 100);
+                    Console.Write($"{ mas[0][i, j]}\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Вторая матрица ступенчатого массива:");
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    mas[1][i, j] = rand.Next(-99, 100);
+                    Console.Write($"{mas[1][i, j]}\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Третья матрица ступенчатого массива:");
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    mas[2][i, j] = rand.Next(-99, 100);
+                    Console.Write($"{mas[2][i, j]}\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+            //Минимум в каждой строке
+            int min = 1000, sum = 0;
+            Console.WriteLine("Минимумы в первой матрице:");
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    if (mas[0][i, j] < min)
+                    {
+                        min = mas[0][i, j];
+                    }
+                }
+                Console.WriteLine($"В {i+1} строке = {min}");
+                sum += min;
+                min = 1000;
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Минимумы в второй матрице:");
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    if (mas[1][i, j] < min)
+                    {
+                        min = mas[1][i, j];
+                    }
+                }
+                Console.WriteLine($"В {i+1} строке = {min}");
+                sum += min;
+                min = 1000;
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Минимумы в третьей матрице:");
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (mas[2][i, j] < min)
+                    {
+                        min = mas[2][i, j];
+                    }
+                }
+                Console.WriteLine($"В {i+1} строке = {min}");
+                sum += min;
+                min = 1000;
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Сумма минимумов = {sum}");
+
+            Console.ReadKey();
+
+        }
+    }
+}

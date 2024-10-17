@@ -1,0 +1,44 @@
+***********************************************************************
+*         Copyright (C) 1996-1997 Texas Instruments Incorporated
+*                      All Rights Reserved
+*         UNIF8 ASSEMBLY OPTIMIZER SOURCE - Example 5-35
+*         From Programmer's Guide
+***********************************************************************
+********* ASSEMBLY OPTIMIZER CODE: *******************
+
+        .def _unrolled_if_then_sa
+
+_unrolled_if_then_sa: .cproc   a, cword, mask, theta
+
+        .reg    cword, mask, theta, ifi, ifi1, a, ai, ai1, cntr
+	.reg	cdi, cdi1, sumi, sumi1, sum
+ 
+        MVK     16,cntr			; cntr = 32/2
+	ZERO	sumi			; sumi = 0
+	ZERO	sumi1			; sumi+1 = 0
+
+LOOP:   .trip 32
+	AND	.L1X	cword,mask,cdi	; cdi = codeword & maski
+  [cdi]	MVK	.S1	1,cdi		; !(!(cdi))
+	CMPEQ	.L1X	theta,cdi,ifi	; (theta == !(!(cdi)))
+	LDH	.D1	*a++,ai		; a[i]
+  [ifi]	ADD	.L1	sumi,ai,sumi	; sum += a[i]
+ [!ifi]	SUB	.D1	sumi,ai,sumi	; sum -= a[i]
+	SHL	.S1	mask,1,mask	; maski+1 = maski << 1;
+
+	AND	.L2X	cword,mask,cdi1	; cdi+1 = codeword & maski+1
+ [cdi1]	MVK	.S2	1,cdi1		; !(!(cdi+1))
+	CMPEQ	.L2	theta,cdi1,ifi1	; (theta == !(!(cdi+1)))
+	LDH	.D1	*a++,ai1	; a[i+1]
+ [ifi1] ADD	.L2	sumi1,ai1,sumi1	; sum += a[i+1]
+[!ifi1] SUB	.D2	sumi1,ai1,sumi1	; sum -= a[i+1]
+	SHL	.S1	mask,1,mask	; maski = maski+1 << 1;
+
+ [cntr] ADD	.D2	-1,cntr,cntr	; decrement counter
+ [cntr] B	.S2	LOOP		; for LOOP
+
+	ADD	sumi,sumi1,sum		; Add sumi and sumi+1 for ret value
+
+	.return sum
+
+        .endproc 

@@ -1,0 +1,38 @@
+using System;
+
+namespace Lr2
+{
+    class Num2
+    {
+        static int C(int n, int k)
+        {
+            if (k == 0 || k == n)
+            {
+                return 1;
+            }
+            return C(n - 1, k - 1) + C(n - 1, k);
+        }
+
+        static void Main()
+        {
+            //Вариант
+            int variant = (14 - 1) % 4 + 1; // = 2
+            Console.WriteLine($"Вариант {variant}\n");
+
+            int n, k;
+            //Ввод n и k
+            Console.Write("Введите n: ");
+            n = Convert.ToInt32(Console.ReadLine());
+            do
+            {
+                Console.Write("Введите k (k < n): ");
+                k = Convert.ToInt32(Console.ReadLine());
+            } while (k > n);
+            Console.WriteLine();
+
+            Console.WriteLine($"Результат: {C(n, k)}");
+            Console.ReadKey();
+
+        }
+    }
+}

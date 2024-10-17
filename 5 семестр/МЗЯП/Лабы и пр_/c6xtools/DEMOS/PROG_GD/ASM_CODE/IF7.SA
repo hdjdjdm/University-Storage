@@ -1,0 +1,31 @@
+***********************************************************************
+*         Copyright (C) 1996-1997 Texas Instruments Incorporated
+*                      All Rights Reserved
+*         IF7 ASSEMBLY OPTIMIZER SOURCE - Example 5-30
+*         From Programmer's Guide
+***********************************************************************
+********* ASSEMBLY OPTIMIZER CODE: *******************
+
+        .def _if_then_sa
+
+_if_then_sa: .cproc   a, cword, mask, theta
+
+        .reg    cond, if, ai, sum, cntr
+ 
+        MVK     32,cntr			; cntr = 32
+	ZERO	sum			; sum = 0
+
+LOOP:   .trip 32
+	AND	.S2X	cword,mask,cond	; cond = codeword & mask
+ [cond]	MVK	.S2	1,cond		; !(!(cond))
+	CMPEQ	.L2	theta,cond,if	; (theta == !(!(cond)))
+	LDH	.D1	*a++,ai		; a[i]
+   [if]	ADD	.L1	sum,ai,sum	; sum += a[i]
+  [!if]	SUB	.D1	sum,ai,sum	; sum -= a[i]
+	SHL	.S1	mask,1,mask	; mask = mask << 1;
+ [cntr] ADD	.L2	-1,cntr,cntr	; decrement counter
+ [cntr] B	.S1	LOOP		; for LOOP
+
+	.return	sum
+
+        .endproc 

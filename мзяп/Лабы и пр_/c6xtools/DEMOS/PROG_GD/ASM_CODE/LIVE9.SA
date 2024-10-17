@@ -1,0 +1,43 @@
+***********************************************************************
+*         Copyright (C) 1996-1997 Texas Instruments Incorporated
+*                      All Rights Reserved
+*         LIVE9 ASSEMBLY OPTIMIZER SOURCE - Example 5-39
+*         From Programmer's Guide
+***********************************************************************
+********* ASSEMBLY OPTIMIZER CODE: *******************
+
+        .def _live_long_sa
+
+_live_long_sa: .cproc   a, b, c, d, e
+
+        .reg    ai, bi, sum0, sum1, sum
+	.reg	a0p, a_0, a_1, a_2, a_3, b_0, b0p, b_1, b_2, b_3, cntr
+ 
+        MVK     100,cntr		; cntr = 100
+	ZERO	sum0			; sum0 = 0
+	ZERO	sum1			; sum1 = 0
+
+LOOP:   .trip 100
+	LDH	.D1	*a++,ai		; load ai from memory
+	LDH	.D2	*b++,bi		; load bi from memory
+	MPY	.M1	ai,c,a_0	; a0 = ai * c
+	SHR	.S1	a_0,15,a_1	; a1 = a0 >> 15
+	MPY	.M1X	a_1,d,a_2	; a2 = a1 * d
+	MV	.D1	a_0,a0p		; save a0 across iterations
+	ADD	.L1	a_2,a0p,a_3	; a3 = a2 + a0
+	ADD	.L1	sum0,a_3,sum0	; sum0 += a3
+	MPY	.M2X	bi,c,b_0	; b0 = bi * ci
+	SHR	.S2	b_0,15,b_1	; b1 = b0 >> 15
+	MPY	.M2X	b_1,e,b_2	; b2 = b1 * e
+	MV	.D2	b_0,b0p		; save b0 across iterations
+	ADD	.L2	b_2,b0p,b_3	; b3 = b2 + b0
+	ADD	.L2	sum1,b_3,sum1	; sum1 += b3
+
+ [cntr]	SUB	.S2	cntr,1,cntr	; decrement loop counter
+ [cntr]	B	.S1	LOOP		; branch to loop
+
+	ADD	sum0,sum1,sum		; Add sumi and sumi+1 for ret value
+
+	.return sum
+
+        .endproc

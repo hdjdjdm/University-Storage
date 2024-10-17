@@ -1,0 +1,13 @@
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\bin\Debug\Lr6Num2.exe.config
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\bin\Debug\Lr6Num2.exe
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\bin\Debug\Lr6Num2.pdb
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.csproj.AssemblyReference.cache
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.csproj.SuggestedBindingRedirects.cache
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.Form1.resources
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.Properties.Resources.resources
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.csproj.GenerateResource.cache
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.csproj.CoreCompileInputs.cache
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.exe
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.pdb
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.Add.resources
+C:\Users\AMD\Desktop\ucheba\Lr6Num2\obj\Debug\Lr6Num2.Search.resources

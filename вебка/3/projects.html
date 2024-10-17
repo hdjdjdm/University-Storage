@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>Проекты</title>
+    <link rel="icon" href="./assets/icons/favicon.png" type="image/png">
+</head>
+
+<body>
+    <div class="error_wrap">
+        <img src="./assets/icons/404error.svg" alt="404error" onclick="showTemporaryText(this, 'Печалька:/', 'right')" />
+        <h1>Упс... страничка не найдена</h1>
+        <button onclick="window.location.href='index.html'">
+            <img src="./assets/icons/home.svg" alt="home_icon" id="svg" />
+            На главную
+        </button>
+    </div>
+    
+    <script src="./scripts/showTip.js"></script>
+</body>
+
+</html>

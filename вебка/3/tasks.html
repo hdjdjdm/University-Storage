@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>Задачи</title>
+    <link rel="icon" href="./assets/icons/favicon.png" type="image/png">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img 
+            src="./assets/icons/header-cat.gif"
+            alt="header-cat" 
+            onclick="showTemporaryText(this, 'Реально классный! Подтверждаю!', 'right')" 
+            />
+            <span class="text">
+                <h1>Классный таск-менеджер!</h1>
+                created by Морзюков Максим из ПрИ-21
+            </span>
+        </div>
+        <button id="openDialog">
+            <img src="./assets/icons/add.svg" alt="add_icon" id="svg" />
+            <span>Добавить задачу</span>
+        </button>
+    </header>
+    <nav>
+        <a href="./index.html">
+            <img src="./assets/icons/home.svg" alt="home_icon" id="svg" />
+            Главная
+        </a>
+        <a href="./projects.html">
+            <img src="./assets/icons/projects.svg" alt="projects_icon" id="svg" />
+            Проекты
+        </a>
+        <a class="active" href="./tasks.html">
+            <img src="./assets/icons/tasks.svg" alt="tasks_icon" id="svg" />
+            Список задач
+        </a>
+        <a href="./about.html">
+            <img src="./assets/icons/help.svg" alt="help_icon" id="svg" />
+            О приложении
+        </a>
+        <button>
+            <img src="./assets/icons/menu.svg" alt="menu_icon" id="svg" />
+        </button>
+    </nav>
+    <div class="sidebar">
+        <nav>
+            <a href="./index.html">
+                <img src="./assets/icons/home.svg" alt="home_icon" id="svg" />
+                Главная
+            </a>
+            <a href="./projects.html">
+                <img src="./assets/icons/projects.svg" alt="projects_icon" id="svg" />
+                Проекты
+            </a>
+            <a class="active" href="./tasks.html">
+                <img src="./assets/icons/tasks.svg" alt="tasks_icon" id="svg" />
+                Список задач
+            </a>
+            <a href="./about.html">
+                <img src="./assets/icons/help.svg" alt="help_icon" id="svg" />
+                О приложении
+            </a>
+        </nav>
+    </div>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Задачи</th>
+                    <th>В работе</th>
+                    <th>Выполненные</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="taskList" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+                    <td id="inProgressList" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+                    <td id="completedList" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <dialog id="taskDialog">
+        <form id="addTaskForm" method="dialog">
+            <label for="taskName">Добавить задачу</label>
+            <input 
+                type="text"
+                id="taskName"
+                name="taskName"
+                autoFocus
+                placeholder="Введите название"
+                required
+                autocomplete="off"
+            >
+            <div class="buttons">
+                <button type="submit">
+                    <img src="./assets/icons/add.svg" alt="add_icon" id="svg" />
+                    Добавить задачу
+                </button>
+                <button id="closeDialog" type="button">Закрыть</button>
+            </div>
+        </form>
+    </dialog>
+    
+    <script src="./scripts/ui.js"></script>
+    <script src="./scripts/loadTasks.js"></script>
+    <script src="./scripts/taskManager.js"></script>
+    <script src="./scripts/addtask_modal.js"></script>
+    <script src="./scripts/showTip.js"></script>
+</body>
+
+</html>

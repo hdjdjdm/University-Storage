@@ -1,0 +1,79 @@
+***********************************************************************
+*         Copyright (C) 1996-1997 Texas Instruments Incorporated
+*                      All Rights Reserved
+*         FIR11 ASSEMBLY OPTIMIZER SOURCE - Example 5-49
+*         From Programmer's Guide
+***********************************************************************
+********* ASSEMBLY OPTIMIZER CODE: *******************
+
+        .def _fir_sa
+
+_fir_sa: .cproc   x, h, y
+
+        .reg    x_1, h_1, sum0, sum1, ctr, octr
+	.reg	p00, p01, p02, p03, p10, p11, p12, p13
+	.reg	x0, x1, x2, x3, h0, h1, h2, h3, rstx, rsth
+ 
+	ADD	h,2,h_1			; set up pointer to h[1]
+        MVK     50,octr			; outer loop ctr = 100/2
+	MVK	64,rstx			; used to rst x pointer each outer loop
+	MVK	64,rsth			; used to rst h pointer each outer loop
+OUTLOOP:
+	ADD	x,2,x_1			; set up pointer to x[j+1]
+	SUB	h_1,2,h			; set up pointer to h[0]
+        MVK     8,ctr			; inner loop ctr = 32/2
+	ZERO	sum0			; sum0 = 0
+	ZERO	sum1			; sum1 = 0
+ [octr]	SUB	octr,1,octr		; decrement outer loop counter
+		
+        .mptr   x,   x+0
+        .mptr   x_1, x+2
+        .mptr   h,   h+0
+        .mptr   h_1, h+2
+
+	LDH	.D2	*x++[2],x0	; x0 = x[j]
+
+LOOP:   .trip 8
+
+
+	LDH	.D1	*x_1++[2],x1		; x1 = x[j+i+1]
+	LDH	.D1	*h++[2],h0		; h0 = h[i]
+	MPY	.M1X	x0,h0,p00		; x0 * h0
+	MPY	.M1	x1,h0,p10		; x1 * h0
+	ADD	.L1	p00,sum0,sum0		; sum0 += x0 * h0
+	ADD	.L2X	p10,sum1,sum1		; sum1 += x1 * h0
+
+	LDH	.D2	*x++[2],x2		; x2 = x[j+i+2]
+	LDH	.D2	*h_1++[2],h1		; h1 = h[i+1]
+	MPY	.M2X	x1,h1,p01		; x1 * h1
+	MPY	.M2	x2,h1,p11		; x2 * h1
+	ADD	.L1X	p01,sum0,sum0		; sum0 += x1 * h1
+	ADD	.L2	p11,sum1,sum1		; sum1 += x2 * h1
+
+	LDH	.D1	*x_1++[2],x3		; x3 = x[j+i+3]
+	LDH	.D1	*h++[2],h2		; h2 = h[i+2]
+	MPY	.M1X	x2,h2,p02		; x2 * h2
+	MPY	.M1	x3,h2,p12		; x3 * h2
+	ADD	.L1	p02,sum0,sum0		; sum0 += x2 * h2
+	ADD	.L2X	p12,sum1,sum1		; sum1 += x3 * h2
+
+	LDH	.D2	*x++[2],x0		; x0 = x[j+i+4]
+	LDH	.D2	*h_1++[2],h3		; h3 = h[i+3]
+	MPY	.M2X	x3,h3,p03		; x3 * h3
+	MPY	.M2	x0,h3,p13		; x0 * h3
+	ADD	.L1X	p03,sum0,sum0		; sum0 += x3 * h3
+	ADD	.L2	p13,sum1,sum1		; sum1 += x0 * h3
+
+
+  [ctr] SUB	.S2	ctr,1,ctr		; decrement loop counter
+  [ctr] B	.S2	LOOP			; branch to loop
+
+	SHR	sum0,15,sum0		; sum0 >> 15
+	SHR	sum1,15,sum1		; sum1 >> 15
+	STH	sum0,*y++		; y[j] = sum0 >> 15
+	STH	sum1,*y++		; y[j+1] = sum1 >> 15
+	SUB	x,rstx,x		; reset x pointer to x[j]
+	SUB	h_1,rsth,h_1		; reset h pointer to h[0]
+ [octr]	B	OUTLOOP			; branch to outer loop
+
+        .endproc

@@ -1,0 +1,101 @@
+/*3.1.2. Создать массив из 15 элементов (ячеек), заполненный случайными числами в диапазоне
+от -100 до 100.
+Разработать методы:
+а) расчёта количества неотрицательных чисел,
+б) расчёта суммы отрицательных чисел,
+в) нахождения номера минимального отрицательного числа,
+г) вывода ячеек с нечётными индексами по формату: a[i] = x (i — номер элемента, х — значение).*/
+using System;
+
+namespace Lr3
+{
+    class Num1
+    {
+        // а) расчёта количества неотрицательных чисел
+        static int cpol(int[] mas)
+        {
+            int count = 0;
+            for (int i = 0; i < 15; i++)
+            {
+                if (mas[i] >= 0)
+                {
+                    count++;
+                }
+            }
+            return count;
+        } 
+        
+        // б) расчёта суммы отрицательных чисел
+        static int cotr(int[] mas)
+        {
+            int sum = 0;
+            for (int i = 0; i < 15; i++)
+            {
+                if (mas[i] < 0)
+                {
+                    sum += mas[i];
+                }
+            }
+            return sum;
+        }
+        
+        // в) нахождения номера минимального отрицательного числа
+        static int mini(int[] mas)
+        {
+            int min = 1000, mini = 0;
+            for (int i = 0; i < 15; i++)
+            {
+                if (mas[i] < min && mas[i] < 0)
+                {
+                    min = mas[i];
+                    mini = i;
+                }
+            }
+            return mini;
+        }
+        
+        // г) вывода ячеек с нечётными индексами по формату: a[i] = x (i — номер элемента, х — значение)
+        static void prn(int[] mas)
+        {
+            Console.WriteLine("Ячейки с нечетными индексами");
+            for (int i = 0; i < 15; i++)
+            {
+                if (i % 2 != 0)
+                {
+                    Console.WriteLine($"a[{i}] = {mas[i]}");
+                }
+            }
+        }
+        
+        static void Main()
+        {
+            //Вариант
+            int variant = (14 - 1) % 3 + 1; // = 2
+            Console.WriteLine($"Вариант {variant}\n");
+            
+            //Массив с сулчайными числам от -100 до 100
+            int[] X = new int[15];
+            Random rand = new Random();
+            for (int i = 0; i < 15; i++)
+            {
+                X[i] = rand.Next(-100, 101);
+            }
+            
+            //Вывод массива
+            Console.WriteLine("Массив:");
+            for (int i = 0; i < 15; i++)
+            {
+                Console.Write($"{X[i]} ");                
+            }
+            Console.WriteLine("\n");
+            
+            //Результаты методов
+            Console.WriteLine($"Количество неотрицательных чисел = {cpol(X)}\n");
+            Console.WriteLine($"Сумма отрицательных чисел = {cotr(X)}\n");
+            Console.WriteLine($"Номер минимального отрицательного числа = {mini(X)}\n");
+            prn(X);
+            
+            Console.ReadKey();
+        }
+    }
+}

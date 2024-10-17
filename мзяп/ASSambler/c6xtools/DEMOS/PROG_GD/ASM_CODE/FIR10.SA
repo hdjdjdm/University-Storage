@@ -1,0 +1,57 @@
+***********************************************************************
+*         Copyright (C) 1996-1997 Texas Instruments Incorporated
+*                      All Rights Reserved
+*         FIR10 ASSEMBLY OPTIMIZER SOURCE - Example 5-44
+*         From Programmer's Guide
+***********************************************************************
+********* ASSEMBLY OPTIMIZER CODE: *******************
+
+        .def _fir_sa
+
+_fir_sa: .cproc   x, h, y
+
+        .reg    x_1, h_1, sum0, sum1, ctr, octr
+	.reg	p00, p01, p10, p11, x0, x1, h0, h1, rstx, rsth
+ 
+        ADD     h,2,h_1                 ; set up pointer to h[1]
+        MVK     50,octr			; outer loop ctr = 100/2
+	MVK	64,rstx			; used to rst x pointer each outer loop
+	MVK	64,rsth			; used to rst h pointer each outer loop
+OUTLOOP:
+	ADD	x,2,x_1			; set up pointer to x[j+1]
+	SUB	h_1,2,h			; set up pointer to h[0]
+        MVK     16,ctr			; inner loop ctr = 32/2
+	ZERO	sum0			; sum0 = 0
+	ZERO	sum1			; sum1 = 0
+ [octr]	SUB	octr,1,octr		; decrement outer loop counter
+		
+	LDH	.D1	*x++[2],x0	; x0 = x[j]
+
+LOOP:   .trip 16
+
+	LDH	.D2	*x_1++[2],x1	; x1 = x[j+i+1]
+	LDH	.D1	*h++[2],h0	; h0 = h[i]
+	MPY	.M1	x0,h0,p00	; x0 * h0
+	MPY	.M1X	x1,h0,p10	; x1 * h0
+	ADD	.L1	p00,sum0,sum0	; sum0 += x0 * h0
+	ADD	.L2X	p10,sum1,sum1	; sum1 += x1 * h0
+
+	LDH	.D1	*x++[2],x0	; x0 = x[j+i+2]
+	LDH	.D2	*h_1++[2],h1	; h1 = h[i+1]
+	MPY	.M2	x1,h1,p01	; x1 * h1
+	MPY	.M2X	x0,h1,p11	; x0 * h1
+	ADD	.L1X	p01,sum0,sum0	; sum0 += x1 * h1
+	ADD	.L2	p11,sum1,sum1	; sum1 += x0 * h1
+
+ [ctr]	SUB	.S2	ctr,1,ctr	; decrement loop counter
+ [ctr]	B	.S2	LOOP		; branch to loop
+
+	SHR	sum0,15,sum0		; sum0 >> 15
+	SHR	sum1,15,sum1		; sum1 >> 15
+	STH	sum0,*y++		; y[j] = sum0 >> 15
+	STH	sum1,*y++		; y[j+1] = sum1 >> 15
+	SUB	x,rstx,x		; reset x pointer to x[j]
+	SUB	h_1,rsth,h_1		; reset h pointer to h[0]
+ [octr]	B	OUTLOOP			; branch to outer loop
+
+        .endproc

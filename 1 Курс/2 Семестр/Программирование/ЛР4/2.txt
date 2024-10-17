@@ -1,0 +1,107 @@
+/* 4.2.2. "Книги". Библиотечному коллектору необходимо создать n наборов книг для рассылки в библиотеки.
+В каждом наборе должны быть представлены книги разной тематики, по возможности равномерно.
+В коллекторе составлен общий список книг, упорядоченный по фамилиям авторов. Необходимо
+распределить книги по наборам.
+
+Указание: тематику книг следует задать перечислением. Следует определить класс Book, среди полей
+которого будет поле title, заданное перечислением.
+Пример реализации — аналогично заданию 2.1. */
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+
+namespace Lr4
+{
+    class Num2
+    {
+        static void Main()
+        {
+            //Вариант
+            int variant = (14 - 1) % 3 + 1; // = 2
+            Console.WriteLine($"Вариант {variant}\n");
+
+            //Кинги
+            List<Book> books = new List<Book>
+            {
+                new Book ("Вокруг света за 80 дней", "Жуль Верн",title.приключения),
+                new Book ("Двадцать тысяч льё под водой", "Жуль Верн", title.приключения ),
+                new Book ("Зеленая Миля", "Стивен Кинг", title.триллер ),
+                new Book ("Краткая история времени", "Стивен Хокинг", title.научная ),
+                new Book ("Хиросима", "Джон Херси", title.историческая ),
+                new Book ("Космос", "Карл Саган", title.научная ),
+                new Book ("Остров проклятых", "Деннис Лихэйн", title.триллер ),
+                new Book ("Краткая история англии", "Саймон Дженкинс", title.историческая ),
+                new Book ("Теория зла", "Донато Карризи", title.триллер )
+            };
+
+            //Сортировка
+            books.Sort((a, b) => a.author.CompareTo(b.author));
+
+            //Количество наборов
+            Console.Write("Введите количество наборов книг: ");
+            int n = Convert.ToInt32(Console.ReadLine());
+
+            //Наборы
+            List<List<Book>> bookSets = new List<List<Book>>(n);
+            for (int i = 0; i < n; i++)
+            {
+                bookSets.Add(new List<Book>());
+            }
+
+            int Set = 0;
+            title currentGenre = title.научная;
+            for (int i = 0; i < Enum.GetNames(typeof(title)).Length; i++)
+            {
+                foreach (Book book in books)
+                {
+                    if (book.genre == currentGenre)
+                    {
+                        bookSets[Set].Add(book);
+                        Set = (Set + 1) % n;
+                    }
+                }
+                currentGenre++;
+            }
+
+            //Вывод
+            for (int i = 0; i < n; i++)
+            {
+                bookSets[i].Sort((a, b) => a.author.CompareTo(b.author));
+                Console.WriteLine($"Набор {i + 1}: ");
+                foreach (Book book in bookSets[i])
+                {
+                    Console.WriteLine($"Название: {book.name,22}\t {"Автор: "} {book.author,16}\t Жанр: {book.genre}");
+                }
+                Console.WriteLine();
+            }
+
+            Console.ReadKey();
+
+        }
+
+
+    }
+
+    enum title
+    {
+        научная, 
+        приключения, 
+        историческая,
+        триллер
+    }
+
+    class Book
+    {
+        public string name;
+        public string author;
+        public title genre;
+        public Book(String Name, String Author, title Genre)
+        {
+            name = Name;
+            author = Author;
+            genre = Genre;
+        }
+    }
+}

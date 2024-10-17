@@ -1,0 +1,230 @@
+README.1ST
+
+TEXAS INSTRUMENTS MICROPROCESSOR DEVELOPMENT TOOLS
+
+Thank you for choosing Texas Instruments software development tools.  It is our
+goal to provide you with the most useful and efficient development tools from
+which to develop your applications around Texas Instruments processors.
+Included in the package you will find our Microprocessor Development Systems
+Customer Support Guide which shows services available to our customers.
+
+For questions or technical support, please consult your customer support guide
+or contact the DSP Hotline at:
+
+Email: dsph@ti.com
+Phone: (281) 274-2320
+Fax:   (281) 274-2324
+
+-------------------------------------------------------------------------------
+
+
+This readme file contains the following information -- Bugs that were 
+discovered in Release 1.00 of the TMS320C6x tools and fixed in Release 1.10
+of the TMS320C6x tools, enhancements made for Release 1.10 of the TMS320C6x
+tools, and the memory map that load6x uses.
+
+
+-------------------------------------------------------------------------------
+              KNOWN BUGS FROM VERSION 1.00 THAT ARE FIXED IN 1.10
+-------------------------------------------------------------------------------
+     o Assembler
+
+         -  The assembler did not produce any warning/error messages on a
+            post-incremented load/store instruction in parallel with a write
+            to the load/store address register.
+ 
+         -  Assembler did not give error message for too many writes to one
+            register on the same cycle.
+ 
+     o Assembly Optimizer
+
+         -  If an assembly instruction inside a .proc directive used a symbol
+            not defined in the .proc or in a .reg directive, the assembly
+            optimizer may have failed due to an illegal memory access.
+ 
+         -  If there was a branch instruction inside the .proc region that
+            tried to branch to a location outside of the .proc region, no 
+            error was reported and code may have been left out of the 
+            resulting assembly (.asm) file.
+ 
+         -  If the assembly optimizer produced 2 versions of a loop the "test"
+            (compare) to see if the pipelined version of the loop could  
+            execute may have used the wrong register in the "test".  
+ 
+         -  The assembly optimizer may not have found a schedule when the user
+            specified functional units.
+
+         -  The assembly optimizer may have added unnecessary NOPs to the
+            epilog of a software pipelined loop.
+
+         -  A branch around .proc region caused the assembly optimizer to give
+            an error message and error out.
+ 
+         -  If a user used an illegal instruction (ex: ADDU REG1,REG2,REG3
+            instead of ADDU REG1,REG2,REG3:REG4) the assembly optimizer failed.
+
+         -  The assembly optimizer may have performed code in wrong order when
+            it created the assembly (.asm) file.
+
+         -  Using -g on assembly optimizer source files may have caused the
+            debugger to crash if the user tried to set a breakpoint in the
+            disassembly window that corresponded to code from the .sa file.
+ 
+         -  Multiple instances of .proc/.endproc regions in an assembly
+            optimizer source file may have caused the assembly optimizer to
+            fail.
+ 
+         -  A positive address offset in an assembly optimizer source file may
+            have come out as a negative offset in the resulting assembly 
+            (.asm) file (ex: *+B8[B1] in .sa file may have become *-B8[B1] 
+            .asm file).
+ 
+         -  The assembly optimizer may have generated invalid code when a
+            register was live-too-long.  The assembly optimizer would have
+            generated a move instruction, but if an instruction of the form 
+            (OP A,A,B) was in the .sa file the resulting assembly would have
+            been (MV A,C ... OP A,C,B) instead of (MV A,C ... OP C,C,B).
+
+     o Compiler
+
+         -  The "DATA_ALIGN" pragma only accepted decimal numbers, and on
+            other number types, the compiler failed without an error message.
+
+         -  The compiler did not place "const" variables in the ".const" 
+            section (Use "far const" to place constants in the ".const"
+            section).
+ 
+         -  A loop with an "if-else" statement and compiled with -o3 may have
+            produced incorrect assembly code (the offset register is not 
+            incremented properly).
+
+         -  The compiler may have generated a write to one register in parallel
+            with a write to a (long variable) register pair where one of the 
+            registers was the same as the first write.
+ 
+         -  The compiler may have generated instructions with incorrect use of 
+            the cross path that showed up as errors in the assembler.
+ 
+         -  The compiler failed if you mistyped a cregister (control register)
+            name.
+ 
+         -  The compiler may have produced code which pointed to wrong array 
+            element due to an optimization that allowed the compiler to make a  
+            copy of an address register.  The copied address register was 
+            mishandled.
+ 
+     o Linker
+
+         -  If a user broke up the ".bss" section into multiple sections, 
+            references to the data in all but the first linked section were
+            incorrect because the linker assumed that the Data Page Pointer
+            (B14) pointed to the beginning of the section that the data was in
+            (a subsection of ".bss" in this case).
+ 
+     o Simulator
+
+         -  Simulator/Debugger did not do a DMA transfer to a file I/O port.
+
+
+
+ 
+-------------------------------------------------------------------------------
+                         ENHANCEMENTS FOR RELEASE 1.10
+-------------------------------------------------------------------------------
+     o Assembly Optimizer
+
+         -  *** UNDOCUMENTED OPTION ***  There is an option (-mx) that has been
+            added to the assembly optimizer.  If the assembly optimizer is
+            invoked with this option, the assembly optimizer will search more
+            exhaustively to avoid live-too-long values in software pipelined
+            loop schedules (See the TMS320C62xx Programmer's Guide for more
+            information).  The -mx option is not guaranteed to find a better
+            schedule for your assembly optimizer source, so USE CAUTION when
+            adding this option to your command line.
+
+         -  Assembly optimizer files can be made C callable by using the
+            .cproc directive.  See Chapter 4 of the TMS320C6x Optimizing C
+            Compiler User's Guide for a description of how to use this
+            directive.
+
+         -  You can specify memory bank conflicts to the assembly optimizer to
+            produce code that will not schedule accesses to the same bank of
+            memory on the same cycle with the .mptr directive.  See Chapter 4 
+            of the TMS320C6x Optimizing C Compiler User's Guide for more 
+            details.
+
+         -  You can now safely use the -g switch while compiling assembly
+            optimizer source files to allow the user to debug the code in the
+            simulator/debugger better.  Be aware that if you use the -g option
+            on code to be assembly optimized, the result will NOT be optimal
+            assembly code.  This option is used to debug your linear assembly
+            algorithm.
+
+     o Compiler
+
+         -  An intrinsic (_abs) for the absolute value with saturation 
+            instruction (ABS) has been added.
+
+         -  The ISTP register is now accessible in C code as a cregister
+            (control register).
+
+         -  You can now include a file called "c6x.h".  This file contains 
+            prototypes of all the intrinsics and declarations of the control
+            registers.
+
+         -  An option (-mw) has been added to the compiler and assembly 
+            optimizer.  Using this option on the command line will add comments
+            to the resulting assembly (.asm) file that will convey information
+            about any pipelined loops in the code (functional units used,
+            resource bounds, loop carry dependency bounds, and the resulting
+            iteration interval found).
+
+     o RTS
+
+         -  The 1.10 release of the TMS320C6x tools includes faster floating
+            point support from the run time support libraries.
+
+     o Simulator  
+
+         -  In the GUI Simulator/Debugger, the DMA can now be used to transfer
+            data to/from an I/O Port where the I/O Port is connected to a file.
+
+         -  The Simulator now adds cycles to the "clk" pseudoregister that
+            correspond to cycles lost due to memory stalls.
+
+         -  Accesses to external memory in the simulator will result in an
+            eight cycle penalty added to the "clk" pseudoregister".
+
+
+
+
+-------------------------------------------------------------------------------
+                           LOAD6X (1.10) MEMORY MAP
+-------------------------------------------------------------------------------
+Version 1.10 of the load6x utility uses the default memory map for the 
+TMS320C6201, which is shown below.  This is the same map that is used in the
+provided sample linker command file (you will find the sample linker command
+file "lnk.cmd" in the "lib" subdirectory of your tools).  Please be sure to
+verify that your code is linked according to this memory map if you want to
+run your code with load6x.
+ 
+         Address                   Memory Type   
+-------------------------      --------------------
+0x0000_0000 - 0x00ff_ffff      External CE0 RAM
+0x0100_0000 - 0x013f_ffff      External CE1 RAM
+0x0140_0000 - 0x0140_ffff      Internal Program RAM
+0x0200_0000 - 0x03ff_ffff      External CE2 RAM
+0x8000_0000 - 0x8000_ffff      Internal Data RAM
+
+
+
+
+-------------------------------------------------------------------------------
+Note:  Cycle counts listed in the documentation may not be equal to cycle
+       counts reported by Release 1.10 of the TMS320C6x standalone simulator
+       (load6x).  The standalone simulator shipped with version 1.10 of the
+       tools more accurately reflects the hardware because it now shows the
+       effects of memory bank conflicts.  The standalone simulator enhancements
+       were not available at the time that the documentation went to print.
+ 
+ 

@@ -1,0 +1,35 @@
+***********************************************************************
+*         Copyright (C) 1996-1997 Texas Instruments Incorporated
+*                      All Rights Reserved
+*         DOTP4 ASSEMBLY OPTIMIZER SOURCE - Example 5-10
+*         From Programmer's Guide
+***********************************************************************
+********* ASSEMBLY OPTIMIZER CODE: *******************
+
+	.def _dotp_sa
+
+_dotp_sa: .cproc   a, b
+
+        .reg    sum, sum0, sum1, cntr 
+	.reg	ai_i1, bi_i1, pi, pi1
+  
+        MVK     50,cntr		; cntr = 100/2
+        ZERO    sum0 		; multiply result = 0
+        ZERO    sum1 		; multiply result = 0
+ 
+LOOP:   .trip 50
+	LDW	*a++,ai_i1	; load ai & a1 from memory
+	LDW	*b++,bi_i1	; load bi & b1 from memory
+	MPY	ai_i1,bi_i1,pi	; ai * bi
+	MPYH	ai_i1,bi_i1,pi1	; ai+1 * bi+1
+	ADD	pi,sum0,sum0	; sum0 += (ai * bi)
+	ADD	pi1,sum1,sum1	; sum1 += (ai+1 * bi+1)
+ [cntr] SUB	cntr,1,cntr	; decrement loop counter
+ [cntr] B	LOOP		; branch to loop
+
+        ADD     sum0,sum1,sum    ; compute final result
+
+        .return sum
+
+        .endproc
+

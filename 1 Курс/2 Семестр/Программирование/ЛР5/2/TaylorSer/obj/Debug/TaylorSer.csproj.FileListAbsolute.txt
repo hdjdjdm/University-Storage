@@ -1,0 +1,6 @@
+C:\Users\AMD\Desktop\ucheba\TaylorSer\obj\Debug\TaylorSer.csproj.AssemblyReference.cache
+C:\Users\AMD\Desktop\ucheba\TaylorSer\obj\Debug\TaylorSer.csproj.CoreCompileInputs.cache
+C:\Users\AMD\Desktop\ucheba\TaylorSer\bin\Debug\TaylorSer.dll
+C:\Users\AMD\Desktop\ucheba\TaylorSer\bin\Debug\TaylorSer.pdb
+C:\Users\AMD\Desktop\ucheba\TaylorSer\obj\Debug\TaylorSer.dll
+C:\Users\AMD\Desktop\ucheba\TaylorSer\obj\Debug\TaylorSer.pdb

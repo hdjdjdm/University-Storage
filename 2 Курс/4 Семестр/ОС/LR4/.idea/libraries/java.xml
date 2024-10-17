@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="java">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/jinput-master/coreAPI/src/main/java" />
+      <root url="file://$PROJECT_DIR$/jinput-master/examples/src/main/java" />
+      <root url="file://$PROJECT_DIR$/jinput-master/plugins/OSX/src/main/java" />
+      <root url="file://$PROJECT_DIR$/jinput-master/plugins/awt/src/main/java" />
+      <root url="file://$PROJECT_DIR$/jinput-master/plugins/linux/src/main/java" />
+      <root url="file://$PROJECT_DIR$/jinput-master/plugins/windows/src/main/java" />
+      <root url="file://$PROJECT_DIR$/jinput-master/plugins/wintab/src/main/java" />
+      <root url="file://$PROJECT_DIR$/jinput-master/tests/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

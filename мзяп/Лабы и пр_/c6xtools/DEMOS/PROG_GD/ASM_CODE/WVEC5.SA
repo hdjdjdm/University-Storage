@@ -1,0 +1,38 @@
+***********************************************************************
+*         Copyright (C) 1996-1997 Texas Instruments Incorporated
+*                      All Rights Reserved
+*         WVEC5 ASSEMBLY OPTIMIZER SOURCE - Example 5-20
+*         From Programmer's Guide
+***********************************************************************
+********* ASSEMBLY OPTIMIZER CODE: *******************
+
+
+	.def _w_vec_sa
+
+_w_vec_sa: .cproc   a, b, c, m
+
+        .reg    ai_i1, bi_i1, pi, pi1, pi_i1, pi_s, pi1_s 
+	.reg	mask, bi, bi1, ci, ci1, c1, cntr
+ 
+	MVK	-1,mask			; set to all 1s to create 0xFFFFFFFF
+	MVKH	0,mask			; clear upper 16 bits to create 0xFFFF
+        MVK     50,cntr			; cntr = 100/2
+	ADD	2,c,c1			; point to c[1]
+ 
+LOOP:   .trip 50
+	LDW	.D1	*a++,ai_i1	; ai & ai+1
+	LDW	.D2	*b++,bi_i1	; bi & bi+1
+	MPY	.M1X	ai_i1,m,pi	; m * ai
+	MPYHL	.M2X	ai_i1,m,pi1	; m * ai+1
+	SHR	.S1	pi,15,pi_s	; (m * ai) >> 15
+	SHR	.S2	pi1,15,pi1_s	; (m * ai+1) >> 15
+	AND	.L2	bi_i1,mask,bi	; bi
+	SHR	.S2	bi_i1,16,bi1	; bi+1	
+	ADD	.L1X	pi_s,bi,ci	; ci = (m * ai) >> 15 + bi
+	ADD	.L2	pi1_s,bi1,ci1	; ci+1 = (m * ai+1) >> 15 + bi+1
+	STH	.D1	ci,*c++[2]	; store ci
+	STH	.D2	ci1,*c1++[2]	; store ci+1
+[cntr]	SUB	.L1	cntr,1,cntr	; decrement loop counter
+[cntr] 	B	.S1	LOOP		; branch to loop
+
+        .endproc

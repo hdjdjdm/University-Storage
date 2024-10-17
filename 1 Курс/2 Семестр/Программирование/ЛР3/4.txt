@@ -1,0 +1,77 @@
+/* 3.4.2. Дана матрица M x N , заполненная случайными числами. Программа должна выводить матрицу
+в наглядном виде (см. выше). Найти максимальный элемент в каждом столбце и вывести его. Используя
+цикл foreach, найти среднее значение среди всех нечётных элементов.*/
+
+using System;
+
+namespace Lr3
+{
+    class Num4
+    {
+        static void Main()
+        {
+            //Вариант
+            int variant = (14 - 1) % 3 + 1; // = 2
+            Console.WriteLine($"Вариант {variant}\n");
+            
+            //Количество элементов
+            int M, N;
+            Console.Write("Введите M: ");
+            M = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Введите N: ");
+            N = Convert.ToInt32(Console.ReadLine());
+            
+            //Матрица с случайными числами
+            int[,] X = new int[M,N];
+            Random rand = new Random();
+            for (int i = 0; i < M; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    X[i,j] = rand.Next(-100, 100);
+                }
+            }
+            
+            //Вывод Матрицы
+            for (int i = 0; i < M; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    Console.Write($"{X[i,j], 4}\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            
+            //Максимальный элемент в каждом столбце
+            int max = -200;
+            for (int j = 0; j < N; j++)
+            {
+                for (int i = 0; i < M; i++)
+                {
+                    if (X[i,j] > max)
+                    {
+                        max = X[i,j];
+                    }
+                }
+                Console.WriteLine($"Максимальный элемент в {j+1} столбце = {max}");
+                max = -200;
+            }
+            
+            //Среднее значение среди всех нечётных элементов
+            int sum = 0, c = 0;
+            foreach (int num in X)
+            {
+                if (num % 2 != 0)
+                {
+                    sum += num;
+                    c++;
+                }
+            }
+            double sr = (double)sum/c;
+            Console.WriteLine($"Среднее значение среди всех нечётных элементов = {sr:f2}");
+            
+            Console.ReadKey();
+        }
+    }
+}

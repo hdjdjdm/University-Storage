@@ -1,0 +1,62 @@
+
+C6201 simulator features:
+
+The simulator models the functionality of the following peripherals:
+
+	* Onchip program memory in memory mapped & cache modes
+	* Onchip data memory banks
+	* DMA controller
+	* External Memory Controller & Memories
+	* Interrupt Selector
+	* Supports bootloads which may be configured through a configuration file
+
+It does not model the following C6201 peripherals
+
+	* McBSPs
+	* Timers
+	* HPI
+
+It in addition supports the following new features
+
+	* External interrupt simulation through file connect to pins.
+	* A faster version of the simulator with limited capabilities.
+	* C67xx instruction set simulator
+
+Accuracy of simulations:
+
+	* The simulator models the system functionality
+
+	* It also provides performance indication through the Analysis
+	  events and clock cycles.
+
+	* The clock cycles provided by the simulator may not be
+	  accurate in all cases involving external memory access, but
+	  may be considered as indicative of the silicon behavior.
+
+Tips for speeding up simulations on the C6201 chip simulator:
+
+	* The simulator starts off all external memories with the
+	  default parameters.  These in most cases are extreme
+	  numbers which may substantially slow down simulation since it
+	  would take a lot of cycles for external access to
+	  complete.  Simulations could be sped up in these cases
+	  by setting the CE control register timings to more
+	  acceptable levels.
+
+	  This could be accomplished through C6X code which is run on
+	  reset or setting the EMIF control registers through the
+	  debugger.
+
+	  Cache could also be enabled from the debugger and usually
+	  gives substantial improvements if the code is running off
+	  chip.
+
+	* The analysis feature of the simulator could be used to
+	  obtain valuable information on the access patterns of the
+	  code being executed.
+
+
+Known Problems:
+
+The "pinc" and "mc" commands should be disabled for the sim62xfast and 
+sim67x simulators

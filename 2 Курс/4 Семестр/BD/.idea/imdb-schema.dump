@@ -1,0 +1,1167 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: aka_name; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE aka_name (
+    id integer NOT NULL,
+    person_id integer NOT NULL,
+    name text NOT NULL,
+    imdb_index character varying(12),
+    name_pcode_cf character varying(5),
+    name_pcode_nf character varying(5),
+    surname_pcode character varying(5),
+    md5sum character varying(32)
+);
+
+
+ALTER TABLE public.aka_name OWNER TO postgres;
+
+--
+-- Name: aka_name_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE aka_name_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.aka_name_id_seq OWNER TO postgres;
+
+--
+-- Name: aka_name_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE aka_name_id_seq OWNED BY aka_name.id;
+
+
+--
+-- Name: aka_title; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE aka_title (
+    id integer NOT NULL,
+    movie_id integer NOT NULL,
+    title text NOT NULL,
+    imdb_index character varying(12),
+    kind_id integer NOT NULL,
+    production_year integer,
+    phonetic_code character varying(5),
+    episode_of_id integer,
+    season_nr integer,
+    episode_nr integer,
+    note text,
+    md5sum character varying(32)
+);
+
+
+ALTER TABLE public.aka_title OWNER TO postgres;
+
+--
+-- Name: aka_title_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE aka_title_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.aka_title_id_seq OWNER TO postgres;
+
+--
+-- Name: aka_title_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE aka_title_id_seq OWNED BY aka_title.id;
+
+
+--
+-- Name: cast_info; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE cast_info (
+    id integer NOT NULL,
+    person_id integer NOT NULL,
+    movie_id integer NOT NULL,
+    person_role_id integer,
+    note text,
+    nr_order integer,
+    role_id integer NOT NULL
+);
+
+
+ALTER TABLE public.cast_info OWNER TO postgres;
+
+--
+-- Name: cast_info_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cast_info_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cast_info_id_seq OWNER TO postgres;
+
+--
+-- Name: cast_info_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cast_info_id_seq OWNED BY cast_info.id;
+
+
+--
+-- Name: char_name; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE char_name (
+    id integer NOT NULL,
+    name text NOT NULL,
+    imdb_index character varying(12),
+    imdb_id integer,
+    name_pcode_nf character varying(5),
+    surname_pcode character varying(5),
+    md5sum character varying(32)
+);
+
+
+ALTER TABLE public.char_name OWNER TO postgres;
+
+--
+-- Name: char_name_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE char_name_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.char_name_id_seq OWNER TO postgres;
+
+--
+-- Name: char_name_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE char_name_id_seq OWNED BY char_name.id;
+
+
+--
+-- Name: comp_cast_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE comp_cast_type (
+    id integer NOT NULL,
+    kind character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.comp_cast_type OWNER TO postgres;
+
+--
+-- Name: comp_cast_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE comp_cast_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comp_cast_type_id_seq OWNER TO postgres;
+
+--
+-- Name: comp_cast_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE comp_cast_type_id_seq OWNED BY comp_cast_type.id;
+
+
+--
+-- Name: company_name; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE company_name (
+    id integer NOT NULL,
+    name text NOT NULL,
+    country_code character varying(255),
+    imdb_id integer,
+    name_pcode_nf character varying(5),
+    name_pcode_sf character varying(5),
+    md5sum character varying(32)
+);
+
+
+ALTER TABLE public.company_name OWNER TO postgres;
+
+--
+-- Name: company_name_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE company_name_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.company_name_id_seq OWNER TO postgres;
+
+--
+-- Name: company_name_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE company_name_id_seq OWNED BY company_name.id;
+
+
+--
+-- Name: company_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE company_type (
+    id integer NOT NULL,
+    kind character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.company_type OWNER TO postgres;
+
+--
+-- Name: company_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE company_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.company_type_id_seq OWNER TO postgres;
+
+--
+-- Name: company_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE company_type_id_seq OWNED BY company_type.id;
+
+
+--
+-- Name: complete_cast; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE complete_cast (
+    id integer NOT NULL,
+    movie_id integer,
+    subject_id integer NOT NULL,
+    status_id integer NOT NULL
+);
+
+
+ALTER TABLE public.complete_cast OWNER TO postgres;
+
+--
+-- Name: complete_cast_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE complete_cast_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.complete_cast_id_seq OWNER TO postgres;
+
+--
+-- Name: complete_cast_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE complete_cast_id_seq OWNED BY complete_cast.id;
+
+
+--
+-- Name: info_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE info_type (
+    id integer NOT NULL,
+    info character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.info_type OWNER TO postgres;
+
+--
+-- Name: info_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE info_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.info_type_id_seq OWNER TO postgres;
+
+--
+-- Name: info_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE info_type_id_seq OWNED BY info_type.id;
+
+
+--
+-- Name: keyword; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE keyword (
+    id integer NOT NULL,
+    keyword text NOT NULL,
+    phonetic_code character varying(5)
+);
+
+
+ALTER TABLE public.keyword OWNER TO postgres;
+
+--
+-- Name: keyword_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE keyword_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.keyword_id_seq OWNER TO postgres;
+
+--
+-- Name: keyword_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE keyword_id_seq OWNED BY keyword.id;
+
+
+--
+-- Name: kind_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE kind_type (
+    id integer NOT NULL,
+    kind character varying(15) NOT NULL
+);
+
+
+ALTER TABLE public.kind_type OWNER TO postgres;
+
+--
+-- Name: kind_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE kind_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.kind_type_id_seq OWNER TO postgres;
+
+--
+-- Name: kind_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE kind_type_id_seq OWNED BY kind_type.id;
+
+
+--
+-- Name: link_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE link_type (
+    id integer NOT NULL,
+    link character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.link_type OWNER TO postgres;
+
+--
+-- Name: link_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE link_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.link_type_id_seq OWNER TO postgres;
+
+--
+-- Name: link_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE link_type_id_seq OWNED BY link_type.id;
+
+
+--
+-- Name: movie_companies; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE movie_companies (
+    id integer NOT NULL,
+    movie_id integer NOT NULL,
+    company_id integer NOT NULL,
+    company_type_id integer NOT NULL,
+    note text
+);
+
+
+ALTER TABLE public.movie_companies OWNER TO postgres;
+
+--
+-- Name: movie_companies_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE movie_companies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.movie_companies_id_seq OWNER TO postgres;
+
+--
+-- Name: movie_companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE movie_companies_id_seq OWNED BY movie_companies.id;
+
+
+--
+-- Name: movie_info; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE movie_info (
+    id integer NOT NULL,
+    movie_id integer NOT NULL,
+    info_type_id integer NOT NULL,
+    info text NOT NULL,
+    note text
+);
+
+
+ALTER TABLE public.movie_info OWNER TO postgres;
+
+--
+-- Name: movie_info_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE movie_info_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.movie_info_id_seq OWNER TO postgres;
+
+--
+-- Name: movie_info_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE movie_info_id_seq OWNED BY movie_info.id;
+
+
+--
+-- Name: movie_info_idx; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE movie_info_idx (
+    id integer NOT NULL,
+    movie_id integer NOT NULL,
+    info_type_id integer NOT NULL,
+    info text NOT NULL,
+    note text
+);
+
+
+ALTER TABLE public.movie_info_idx OWNER TO postgres;
+
+--
+-- Name: movie_info_idx_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE movie_info_idx_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.movie_info_idx_id_seq OWNER TO postgres;
+
+--
+-- Name: movie_info_idx_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE movie_info_idx_id_seq OWNED BY movie_info_idx.id;
+
+
+--
+-- Name: movie_keyword; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE movie_keyword (
+    id integer NOT NULL,
+    movie_id integer NOT NULL,
+    keyword_id integer NOT NULL
+);
+
+
+ALTER TABLE public.movie_keyword OWNER TO postgres;
+
+--
+-- Name: movie_keyword_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE movie_keyword_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.movie_keyword_id_seq OWNER TO postgres;
+
+--
+-- Name: movie_keyword_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE movie_keyword_id_seq OWNED BY movie_keyword.id;
+
+
+--
+-- Name: movie_link; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE movie_link (
+    id integer NOT NULL,
+    movie_id integer NOT NULL,
+    linked_movie_id integer NOT NULL,
+    link_type_id integer NOT NULL
+);
+
+
+ALTER TABLE public.movie_link OWNER TO postgres;
+
+--
+-- Name: movie_link_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE movie_link_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.movie_link_id_seq OWNER TO postgres;
+
+--
+-- Name: movie_link_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE movie_link_id_seq OWNED BY movie_link.id;
+
+
+--
+-- Name: name; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE name (
+    id integer NOT NULL,
+    name text NOT NULL,
+    imdb_index character varying(12),
+    imdb_id integer,
+    gender character varying(1),
+    name_pcode_cf character varying(5),
+    name_pcode_nf character varying(5),
+    surname_pcode character varying(5),
+    md5sum character varying(32)
+);
+
+
+ALTER TABLE public.name OWNER TO postgres;
+
+--
+-- Name: name_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE name_id_seq
+    START WITH 1
+    INCREMENT BY 5555233
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.name_id_seq OWNER TO postgres;
+
+--
+-- Name: name_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE name_id_seq OWNED BY name.id;
+
+
+--
+-- Name: person_info; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE person_info (
+    id integer NOT NULL,
+    person_id integer NOT NULL,
+    info_type_id integer NOT NULL,
+    info text NOT NULL,
+    note text
+);
+
+
+ALTER TABLE public.person_info OWNER TO postgres;
+
+--
+-- Name: person_info_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE person_info_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.person_info_id_seq OWNER TO postgres;
+
+--
+-- Name: person_info_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE person_info_id_seq OWNED BY person_info.id;
+
+
+--
+-- Name: role_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE role_type (
+    id integer NOT NULL,
+    role character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.role_type OWNER TO postgres;
+
+--
+-- Name: role_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE role_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.role_type_id_seq OWNER TO postgres;
+
+--
+-- Name: role_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE role_type_id_seq OWNED BY role_type.id;
+
+
+--
+-- Name: title; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE title (
+    id integer NOT NULL,
+    title text NOT NULL,
+    imdb_index character varying(12),
+    kind_id integer NOT NULL,
+    production_year integer,
+    imdb_id integer,
+    phonetic_code character varying(5),
+    episode_of_id integer,
+    season_nr integer,
+    episode_nr integer,
+    series_years character varying(49),
+    md5sum character varying(32)
+);
+
+
+ALTER TABLE public.title OWNER TO postgres;
+
+--
+-- Name: title_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE title_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.title_id_seq OWNER TO postgres;
+
+--
+-- Name: title_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE title_id_seq OWNED BY title.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aka_name ALTER COLUMN id SET DEFAULT nextval('aka_name_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aka_title ALTER COLUMN id SET DEFAULT nextval('aka_title_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cast_info ALTER COLUMN id SET DEFAULT nextval('cast_info_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY char_name ALTER COLUMN id SET DEFAULT nextval('char_name_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comp_cast_type ALTER COLUMN id SET DEFAULT nextval('comp_cast_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY company_name ALTER COLUMN id SET DEFAULT nextval('company_name_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY company_type ALTER COLUMN id SET DEFAULT nextval('company_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY complete_cast ALTER COLUMN id SET DEFAULT nextval('complete_cast_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY info_type ALTER COLUMN id SET DEFAULT nextval('info_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY keyword ALTER COLUMN id SET DEFAULT nextval('keyword_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY kind_type ALTER COLUMN id SET DEFAULT nextval('kind_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY link_type ALTER COLUMN id SET DEFAULT nextval('link_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY movie_companies ALTER COLUMN id SET DEFAULT nextval('movie_companies_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY movie_info ALTER COLUMN id SET DEFAULT nextval('movie_info_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY movie_info_idx ALTER COLUMN id SET DEFAULT nextval('movie_info_idx_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY movie_keyword ALTER COLUMN id SET DEFAULT nextval('movie_keyword_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY movie_link ALTER COLUMN id SET DEFAULT nextval('movie_link_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY name ALTER COLUMN id SET DEFAULT nextval('name_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY person_info ALTER COLUMN id SET DEFAULT nextval('person_info_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY role_type ALTER COLUMN id SET DEFAULT nextval('role_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY title ALTER COLUMN id SET DEFAULT nextval('title_id_seq'::regclass);
+
+
+--
+-- Name: aka_name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY aka_name
+    ADD CONSTRAINT aka_name_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: aka_title_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY aka_title
+    ADD CONSTRAINT aka_title_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cast_info_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY cast_info
+    ADD CONSTRAINT cast_info_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: char_name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY char_name
+    ADD CONSTRAINT char_name_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comp_cast_type_kind_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY comp_cast_type
+    ADD CONSTRAINT comp_cast_type_kind_key UNIQUE (kind);
+
+
+--
+-- Name: comp_cast_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY comp_cast_type
+    ADD CONSTRAINT comp_cast_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY company_name
+    ADD CONSTRAINT company_name_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_type_kind_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY company_type
+    ADD CONSTRAINT company_type_kind_key UNIQUE (kind);
+
+
+--
+-- Name: company_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY company_type
+    ADD CONSTRAINT company_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: complete_cast_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY complete_cast
+    ADD CONSTRAINT complete_cast_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: info_type_info_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY info_type
+    ADD CONSTRAINT info_type_info_key UNIQUE (info);
+
+
+--
+-- Name: info_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY info_type
+    ADD CONSTRAINT info_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: keyword_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY keyword
+    ADD CONSTRAINT keyword_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: kind_type_kind_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY kind_type
+    ADD CONSTRAINT kind_type_kind_key UNIQUE (kind);
+
+
+--
+-- Name: kind_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY kind_type
+    ADD CONSTRAINT kind_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: link_type_link_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY link_type
+    ADD CONSTRAINT link_type_link_key UNIQUE (link);
+
+
+--
+-- Name: link_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY link_type
+    ADD CONSTRAINT link_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movie_companies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY movie_companies
+    ADD CONSTRAINT movie_companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movie_info_idx_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY movie_info_idx
+    ADD CONSTRAINT movie_info_idx_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movie_info_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY movie_info
+    ADD CONSTRAINT movie_info_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movie_keyword_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY movie_keyword
+    ADD CONSTRAINT movie_keyword_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movie_link_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY movie_link
+    ADD CONSTRAINT movie_link_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY name
+    ADD CONSTRAINT name_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: person_info_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY person_info
+    ADD CONSTRAINT person_info_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: role_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY role_type
+    ADD CONSTRAINT role_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: role_type_role_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY role_type
+    ADD CONSTRAINT role_type_role_key UNIQUE (role);
+
+
+--
+-- Name: title_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY title
+    ADD CONSTRAINT title_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

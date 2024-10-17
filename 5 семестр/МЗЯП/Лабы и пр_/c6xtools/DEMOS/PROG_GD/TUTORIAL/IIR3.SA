@@ -1,0 +1,40 @@
+        .def    _iir3
+
+_iir3  .cproc 	cptr0,sptr0
+ 
+        .reg cptr1, s01, s10, s23, c10, c32, s10_s, s10_t
+        .reg p0, p1, p2, p3, s23_s, s1, t, x, mask, sptr1, s10p, ctr
+
+	MV  	.2  	cptr0,cptr1
+	MV  	.1  	sptr0,sptr1
+ 
+        MVK     50,ctr                  ; setup loop counter
+
+LOOP:   .trip 50
+ 
+        LDW     .D1T1	*cptr0,c32      ; coefAddr[3] & CoefAddr[2]
+        LDW     .D2T2	*cptr1,c10      ; CoefAddr[1] & CoefAddr[0]
+        LDW     .D1T2	*sptr0,s10      ; StateAddr[1] & StateAddr[0]
+        MV      .2	s10,s10p        ; save StateAddr[1] & StateAddr[0]
+ 
+        MPY     .M1 	c32,s10,p2      ; CoefAddr[2] * StateAddr[0]
+        MPYH    .M1	c32,s10,p3      ; CoefAddr[3] * StateAddr[1]
+        ADD     .1	p2,p3,s23       ; CA[2] * SA[0] + CA[3] * SA[1]
+        SHR     .1	s23,15,s23_s    ; (CA[2] * SA[0] + CA[3] * SA[1]) >> 15
+        ADD     .2	s23_s,x,t       ; t = x+((CA[2]*SA[0]+CA[3]*SA[1])>>15)
+        AND     .2	t,mask,t        ; clear upper 16 bits
+ 
+        MPY     .M2	c10,s10,p0      ; CoefAddr[0] * StateAddr[0]
+        MPYH    .M2	c10,s10,p1      ; CoefAddr[1] * StateAddr[1]
+        ADD     .2	p0,p1,s10_t     ; CA[0] * SA[0] + CA[1] * SA[1]
+        SHR     .2	s10_t,15,s10_s  ; (CA[0] * SA[0] + CA[1] * SA[1]) >> 15
+        ADD     .2	s10_s,t,x       ; x = t+((CA[0]*SA[0]+CA[1]*SA[1])>>15)
+ 
+        SHL     .2	s10p,16,s1      ; StateAddr[1] = StateAddr[0]
+        OR      .2	t,s1,s01        ; StateAddr[0] = t
+        STW     .D1	s01,*sptr1      ; store StateAddr[1] & StateAddr[0]
+ 
+  [ctr] ADD     .S1	-1,ctr,ctr      ; dec outer lp cntr
+  [ctr] B       .S1	LOOP            ; Branch outer loop
+
+	.endproc

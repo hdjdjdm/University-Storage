@@ -1,0 +1,10 @@
+Просто цифры. 2022.
+Текст на Русском. Text in English.
+Текст на Русском с цифрами 1234. текстекст. Text in English with numbers 46. texttext.
+Текст на Русском с сокращенной записью числительного 4-й (онлайн компилятор не понимает).
+Текст на Русском с цифрами
+52 с переносом на другую строку. Justtext. Text in English with
+numbers 222 with a transfer to another line. Просто текст.
+Смешанный text with Русскими и English буквами. Смешанный text with Русскими и English буквами and numbers 32.
+
+Просто цифры без точки на конце. 23029090

@@ -1,0 +1,147 @@
+:Base sim62x.hlp
+:Title Help
+:Link sim6x.hlp
+:Link sim62x.hlp
+1 Using the Debugger Interface
+2 Managing Windows
+3 Floating Windows Inside the Main Application Window=Floating_windows_inside_the_main_application_window
+3 Floating Windows Outside the Main Application Window=Floating_windows_outside_the_main_application_window
+3 Docking Windows=Docking_windows
+3 Hiding Windows=Hiding_windows
+2 Managing the Toolbar
+3 Moving the Toolbar=Moving_the_toolbar
+3 Hiding the Toolbar=Hiding_the_toolbar
+2 Managing the Display
+3 Saving a Custom Display=Saving_and_Using_Custom_Displays
+3 Loading a Custom Display=Loading_a_Custom_Display
+3 Invoking the Debugger With a Custom Display=Invoking_the_debugger_with_a_custom_display
+3 Clearing the Display Area of the Command Window=Clearing_the_Display_Area_of_the_Command_Window
+2 Window Descriptions
+3 Calls Window=HIDR_IDDE_CALLS
+3 Command Window=HIDR_IDDE_COMMAND
+3 CPU Window=HIDR_IDDE_CPU
+3 Disassembly Window=HIDR_IDDE_DISASM
+3 File Window=HIDR_IDDE_FILE
+3 Memory Window=HIDR_IDDE_MEMORY
+3 Profile Window=HIDR_IDDE_PROFILE
+3 Watch Window=HIDR_IDDE_WATCH
+1 Entering Commands
+2 Entering Commands From a Batch File=Entering_Commands_From_a_Batch_File
+1 Loading Code
+2 Loading Object Code While Invoking the Debugger=Loading_Object_Code_While_Invoking_the_Debugger
+2 Loading Object Code and Its Associated Symbol Table=Loading_Object_Code_and_Its_Associated_Symbol_Table
+2 Loading Object Code Without Its Associated Symbol Table=Loading_Object_Code_Without_Its_Associated_Symbol_Table
+2 Loading a Symbol Table Without Its Associated Object File=Loading_a_Symbol_Table_Without_Its_Associated_Object_File
+1 Displaying Code
+2 Displaying a Specific C Function=Displaying_a_Specific_C_Function
+2 Displaying C or Assembly Code Beginning at a Specific Point=Displaying_C_or_Assembly_Code_Beginning_at_a_Specific_Point
+2 Displaying the Contents of Any Text File=Displaying_the_Contents_of_Any_Text_File
+1 Running Code
+2 Running an Entire Program=Running_an_Entire_Program
+2 Running Code up to a Specific Point in a Program=Running_Code_up_to_a_Specific_Point_in_a_Program
+2 Running the Code in the Current C Function=Running_the_Code_in_the_Current_C_Function
+1 Single-Stepping Through Code
+2 Single-Stepping Through Assembly Code and Stepping Over Functions=Single_Stepping_Through_Code_and_Stepping_Over_C_Functions
+2 Single-Stepping Through Assembly Code and Stepping Into Functions=Single_Stepping_Through_Assembly_Language_Statements
+2 Single-Stepping Through C Code and Stepping Into Functions=Single_Stepping_Through_C_Code
+2 Single-Stepping Through C Code and Stepping Over C Functions=Single_Stepping_Through_C_Code_and_Stepping_Over_C_Functions
+1 Aliasing
+2 Aliasing command strings=Aliasing_command_strings
+1 Setting and Clearing Breakpoints
+2 Setting Breakpoints=setting_breakpoints
+2 Clearing breakpoints=Clearing_breakpoints
+1 Identifying and Modifying the PC
+2 Identifying  and Finding the Value of the Current PC=Identifying_the_Current_PC
+2 Modifying the PC's Contents=Modifying_the_PC_s_Contents
+2 Resetting to a Program's Original Entry Point=Resetting_to_a_Program_s_Original_Entry_Point
+1 Commands Summary
+2 Change Modes
+3 ASM - Enter assembly mode=HELP_C_AMODE
+3 C - Enter auto mode=Hid_mode_CAUTO
+3 MIX- Enter mixed mode=HELP_C_mmode
+2 Manage Windows
+3 MOVE - Move a window=HELP_C_MOVE
+3 SIZE - Size a window=HELP_C_RESIZE
+3 WIN - Make a window active=HELP_C_WINDOW
+3 ZOOM - Zoom a window=HELP_C_ZOOM
+2 Display and Change Data
+3 ? - Display type, address, and value for specified expression=HELP_C_EXPR
+3 ADDR - Display code at specified address=HELP_C_ADDR
+3 CALLS - Open Calls window=HELP_C_CALL
+3 DASM - Display disassembly at specific address=HELP_C_DISASM
+3 DISP - Add structure, array, or pointer to Watch window=HELP_C_DISP
+3 E, EVAL - Evaluate expression=HELP_C_expr
+3 ECHO - Echo string to display area=HELP_C_echo
+3 FUNC - Display function=HELP_C_FUNC
+3 MEM - Modify Memory window display=HELP_C_mem
+3 SETF - Set default data-display format=HELP_C_SETF
+3 WA - Add item to Watch window=HELP_C_WADD
+3 WD - Delete item from Watch window=HELP_C_WDEL
+3 WHATIS - Find data type=HELP_C_WHATIS
+3 WR - Close Watch window=HELP_C_WCLR
+2 Perform System Tasks
+3 ALIAS - Define custom command string=HELP_C_ALIAS
+3 CD, CHDIR - Change directory=HELP_C_CHDIR
+3 CLS - Clear screen=HELP_C_CLS
+3 DIR - List directory contents=HELP_C_DIR
+3 DLOG - Record display area=HELP_C_DLOG
+3 HELP - Display help topic for debugger command=HELP_C_HELP
+3 PAUSE - Pause execution=HELP_C_PAUSE
+3 PINC - Connect pin=HELP_C_PINC
+3 PIND - Disconnect pin=HELP_C_PIND
+3 PINL - List pins=HELP_C_PINL
+3 QUIT - Exit debugger=HELP_C_quit
+3 RECONNECT - Reset communication with emulator=HELP_C_reconnect
+3 RESET - Reset Target System=HELP_C_RESET
+3 SOUND - Enable error beeping=HELP_C_ERRSOUND
+3 UNALIAS - Delete alias definition=HELP_C_UNALIAS
+3 USE - Use additional directory=HELP_C_use
+2 Manage Breakpoints
+3 BA - Add software breakpoint=HELP_C_BPADD
+3 BD - Delete software breakpoint=HELP_C_BPCLR
+3 BL - List software breakpoints=HELP_C_BPDISP
+3 BR - Reset software breakpoint=HELP_C_BPRESET
+2 Display Files and Load Programs
+3 FILE - Display text file=HELP_C_FILE
+3 LOAD - Load executable object file=HELP_C_load
+3 RELOAD - Reload object code=HELP_C_RELOAD
+3 SLOAD - Load symbol table=HELP_C_sload
+2 Customize the Display
+3 PROMPT - Change command-line prompt=HELP_C_PROMPT
+3 SCONFIG - Load screen configuration=HELP_C_SCONFIG
+3 SSAVE - Save screen configuration=HELP_C_SSAVE
+2 Memory Mapping
+3 FILL - Fill memory word by word=HELP_C_MEMFILL
+3 FILLB - Fill memory byte by byte=HELP_C_FILLB
+3 MA - Add block to memory map=HELP_C_MAPADD
+3 MAP - Enable/disable memory mapping=HELP_C_MAPENABLE
+3 MD - Delete block from memory map=HELP_C_MAPCLR
+3 ML -- List memory map=HELP_C_MAPDISP
+3 MR - Reset memory map=HELP_C_MAPRESET
+3 MS - Save memory block to file=HELP_C_MEMSAVE
+2 Run Programs
+3 CNEXT - Single-step C, Next statement=HELP_C_RUNCNEXT
+3 CSTEP - Single-step C=HELP_C_RUNCSTEP
+3 GO - Run to specified address=HELP_C_GO
+3 HALT - Halt target system=HELP_C_RUNHALT
+3 NEXT - Single-step, next statement=HELP_C_RUNNEXT
+3 RESET - Reset Target System=HELP_C_RESET
+3 RESTART - Reset PC to program entry point=HELP_C_RESTART
+3 RETURN - Return to function's caller=HELP_C_RUNRETURN
+3 RUN - Run code=HELP_C_RUN
+3 RUNB - Benchmark code=HELP_C_RUNB
+3 RUNF - Run free=HELP_C_RUNF
+3 STEP - Single-step=HELP_C_RUNSTEP
+3 TAKE - Execute batch file=HELP_C_TAKE
+2 Profiling
+3 PF - Profile, full=HELP_C_PF
+3 PQ - Profile, quick=HELP_C_PQ
+3 PR - Resume profiling session=HELP_C_PR
+3 PROFILE command- Switch to profiling environment=HELP_C_PMODE
+3 SA - Add stopping point=HELP_C_SA
+3 SD - Delete stopping point=HELP_C_SD
+3 SL - List stopping point=HELP_C_SL
+3 SR - Reset stopping point=HELP_C_SR
+3 VAA - Save all profile data to a file=HELP_C_vaa
+3 VAC - Save displayed profile data to a file=HELP_C_vac
+3 VR - Reset profile window display=HELP_C_vr

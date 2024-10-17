@@ -1,0 +1,239 @@
+/* 4.1.2. Составить описание класса для представления времени в 24-часовом формате. Разработать методы
+установки даты и отдельных её полей (часы, минуты, секунды — закрытые поля) с проверкой
+допустимости вводимых значений (в том числе и при инициализации объекта конструктором). Случаи вне
+допустимых диапазонов необходимо обработать исключениями. Создать методы изменения даты
+на заданное количество часов, минут, секунд.
+Разработать программу, демонстрирующую работу методов класса (необходимо создать несколько
+объектов). */
+
+using System;
+using System.Diagnostics;
+using System.Security.Cryptography;
+
+namespace Lr4
+{
+    class Num1
+    {
+        static void Main()
+        {
+            //Вариант
+            int variant = (14 - 1) % 3 + 1; // = 2
+            Console.WriteLine($"Вариант {variant}\n");
+
+            Time mytime = new Time();
+            mytime.inp();
+            mytime.outp();
+
+            int run;
+            do
+            {
+                Console.WriteLine("Желаете что то изменить?\n1.Да\n2.Нет");
+                run = 1;
+                int ch = Convert.ToInt32(Console.ReadLine());
+                switch (ch)
+                {
+                    case 1:
+                        int ch2, run2;
+                        Console.WriteLine("Выберите, что изменить:\n1.Вся дата\n2.Часы\n3.Минуты\n4.Секунды\n5.Выйти");
+                        do
+                        {
+                            int ch3;
+                            run2 = 1;
+                            ch2 = Convert.ToInt32(Console.ReadLine());
+                            switch (ch2)
+                            {
+                                case 1:
+                                    mytime.inp();
+                                    run = 0;
+                                    break;
+                                case 2:
+                                    Console.WriteLine("1.Изменить\n2.Изменить на x часов");
+                                    do
+                                    {
+                                        ch3 = Convert.ToInt32(Console.ReadLine());
+                                    } while (ch3 < 1 || ch3 > 2);
+                                    if (ch3 == 1)
+                                    {
+                                        mytime.insh();
+                                    }
+                                    else
+                                    {
+                                        mytime.chh();
+                                    }
+                                    run = 0;
+                                    break;
+                                case 3:
+                                    Console.WriteLine("1.Изменить\n2.Изменить на x минут");
+                                    do
+                                    {
+                                        ch3 = Convert.ToInt32(Console.ReadLine());
+                                    } while (ch3 < 1 || ch3 > 2);
+                                    if (ch3 == 1)
+                                    {
+                                        mytime.insm();
+                                    }
+                                    else
+                                    {
+                                        mytime.chm();
+                                    }
+                                    run = 0;
+                                    break;
+                                case 4:
+                                    Console.WriteLine("1.Изменить\n2.Изменить на x секунд");
+                                    do
+                                    {
+                                        ch3 = Convert.ToInt32(Console.ReadLine());
+                                    } while (ch3 < 1 || ch3 > 2);
+                                    if (ch3 == 1)
+                                    {
+                                        mytime.inss();
+                                    }
+                                    else
+                                    {
+                                        mytime.chs();
+                                    }
+                                    run = 0;
+                                    break;
+                                case 5:
+                                    run = 1;
+                                    break;
+                                default:
+                                    Console.WriteLine("Выберите существующий пункт меню.");
+                                    run = 0;
+                                    run2 = 0;
+                                    break;
+                            }
+                        } while (run2 == 0);
+                        mytime.outp();
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        Console.WriteLine("Введите существующий пункт меню");
+                        run = 0;
+                        break;
+                }
+            } while (run == 0);
+
+            return;
+        }
+
+        
+
+
+    }
+
+    public class Time
+    {
+        public int hour;
+        public int min;
+        public int sec;
+
+        public void insh()
+        {
+            Console.Write("Введите часы: ");
+            int x = Convert.ToInt32(Console.ReadLine());
+            while (x < 0 || x > 23)
+            {
+                Console.WriteLine("Ошибка. Недопустимое значение. Введите еще раз.");
+                x = Convert.ToInt32(Console.ReadLine());
+            } 
+            hour = x;
+        }
+        public void insm()
+        {
+            Console.Write("Введите Минуты: ");
+            int x = Convert.ToInt32(Console.ReadLine());
+            while (x < 0 || x > 59)
+            {
+                Console.WriteLine("Ошибка. Недопустимое значение. Введите еще раз.");
+                x = Convert.ToInt32(Console.ReadLine());
+            }
+            min = x;
+        }
+        public void inss()
+        {
+            Console.Write("Введите секунды: ");
+            int x = Convert.ToInt32(Console.ReadLine());
+            while (x < 0 || x > 59)
+            {
+                Console.WriteLine("Ошибка. Недопустимое значение. Введите еще раз.");
+                x = Convert.ToInt32(Console.ReadLine());
+            }
+            sec = x;
+        }
+
+        //Ввод
+        public void inp()
+        {
+            insh();
+            insm();
+            inss();
+        }
+
+        //На x часов
+        public void chh()
+        {
+            Console.Write("На сколько поменять часы? ");
+            int x = Convert.ToInt32(Console.ReadLine());
+            hour += x;
+            hour %= 24;
+        }
+
+        //На x минут
+        public void chm()
+        {
+            Console.Write("На сколько поменять минуты? ");
+            int x = Convert.ToInt32(Console.ReadLine());
+            min += x;
+            hour += min / 60;
+            hour %= 24;
+            min %= 60;
+        }
+
+        //На x секунд
+        public void chs()
+        {
+            Console.Write("На сколько поменять секунды? ");
+            int x = Convert.ToInt32(Console.ReadLine());
+            sec += x;
+            min += sec / 60;
+            hour += min / 60;
+            hour %= 24;
+            min %= 60;
+            sec %= 60;
+        }
+
+        //Вывод 
+        public void outp()
+        {
+            Console.Clear();
+            if (hour < 10)
+            {
+                Console.Write($"0{hour}:");
+            }
+            else
+            {
+                Console.Write($"{hour}:");
+            }
+
+            if (min < 10)
+            {
+                Console.Write($"0{min}:");
+            }
+            else
+            {
+                Console.Write($"{min}:");
+            }
+
+            if (sec < 10)
+            {
+                Console.WriteLine($"0{sec}");
+            }
+            else
+            {
+                Console.WriteLine($"{sec}");
+            }
+        }
+    }
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<group>
+	<student firstname="Bibr" lastname="Mamaev" groupnumber="PrI-21">
+		<subject title="Math" mark="5"/>
+		<subject title="Physics" mark="5"/>
+		<average>3</average>
+	</student>
+	<student firstname="Haha" lastname="Hehehovich" groupnumber="PrI-22">
+		<subject title="Math" mark="3"/>
+		<subject title="Physics" mark="4"/>
+		<average>3.5</average>
+	</student>
+	<student firstname="Krutoi" lastname="Chel" groupnumber="PrI-23">
+		<subject title="Biology" mark="5"/>
+		<subject title="History" mark="4"/>
+		<average>5</average>
+	</student>
+</group>

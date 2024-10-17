@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Сотрудники крутой фирмы</title>
+	<link rel="icon" href="images/icon.png" type="image/x-icon">
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+	<div id="wrapper">
+		<h1>Сотрудники крутой фирмы</h1>
+		
+		<form action="searchById" method="post" style="display: flex; align-items:center;" autocomplete="off"> 
+			<label for="id">Номер сотрудника:</label>
+			<input type="text" id="id" name="id">
+			<div class="formbutton">
+				<button type="submit" id="searchById">
+					<span>Найти по номеру</span>
+				</button>
+			</div>
+		</form>
+		<br>
+		
+		<form action="searchByName" method="post" style="display: flex; align-items:center;" autocomplete="off">
+			<label for="name">Имя сотрудника:</label>
+			<input type="text" id="name" name="name">	
+			<div class="formbutton">
+				<button type="submit" id="searchByName">
+					<span>Найти по имени</span>
+				</button>
+			</div>
+		</form>
+		<br>
+		
+		<form action="viewAllEmployes" method="post">
+			<div class="button">
+				<button type="submit" id="viewAllEmployees">
+					<span>Показать всех сотрудников</span>
+				</button>
+			</div>
+		</form>
+		
+		<div class="button">
+				<a href="createEmployee">
+					<span>Добавить сотрудника</span>
+				</a>
+			</div>
+		<br>
+		
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Номер</th>
+					<th>Имя</th>
+					<th>Должность</th>
+					<th>Дата принятия</th>
+					<th>Департамент</th>
+					<th>Удалить</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/1">1</a></td>
+					<td>Максим</td>
+					<td>Администратор</td>
+					<td>2024-07-05</td>
+					<td>Администрация</td>
+					<td><a href="/deleteEmployee/1">Удалить</a></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/2">2</a></td>
+					<td>Апельсин</td>
+					<td>Менеджер</td>
+					<td>2024-07-21</td>
+					<td>Маркетинг</td>
+					<td><a href="/deleteEmployee/2">Удалить</a></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/3">3</a></td>
+					<td>Яблоко</td>
+					<td>Секретарь</td>
+					<td>2024-07-05</td>
+					<td>Администрация</td>
+					<td><a href="/deleteEmployee/3">Удалить</a></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/4">4</a></td>
+					<td>Грейпфрут</td>
+					<td>Зам. Администратора</td>
+					<td>2024-07-07</td>
+					<td>Администрация</td>
+					<td><a href="/deleteEmployee/4">Удалить</a></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/5">5</a></td>
+					<td>Груша</td>
+					<td>Дизайнер</td>
+					<td>2024-07-10</td>
+					<td>Маркетинг</td>
+					<td><a href="/deleteEmployee/5">Удалить</a></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/6">6</a></td>
+					<td>Банан</td>
+					<td>Кассир</td>
+					<td>2024-07-29</td>
+					<td>Финансы</td>
+					<td><a href="/deleteEmployee/6">Удалить</a></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/7">7</a></td>
+					<td>Слива</td>
+					<td>Бухгалтер</td>
+					<td>2024-07-14</td>
+					<td>Финансы</td>
+					<td><a href="/deleteEmployee/7">Удалить</a></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/8">8</a></td>
+					<td>Мандарин</td>
+					<td>Маркетолог</td>
+					<td>2024-07-18</td>
+					<td>Маркетинг</td>
+					<td><a href="/deleteEmployee/8">Удалить</a></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/9">9</a></td>
+					<td>Персик</td>
+					<td>Уборщик</td>
+					<td>2024-07-06</td>
+					<td>Вспомагательный персонал</td>
+					<td><a href="/deleteEmployee/9">Удалить</a></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td>
+					<td><a href="/employee/10">10</a></td>
+					<td>Анекдот</td>
+					<td>Охрана</td>
+					<td>2024-08-02</td>
+					<td>Вспомагательный персонал</td>
+					<td><a href="/deleteEmployee/10">Удалить</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script src="js\script.js"></script>
+</body>
+</html>

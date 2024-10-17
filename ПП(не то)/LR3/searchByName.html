@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Поиск по имени</title>
+	<link rel="icon" href="images/icon.png" type="image/x-icon">
+	<link rel="stylesheet" href="css/styles.css">
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var name = localStorage.getItem('name');
+			if (name !== 'например, Иванов') {
+				document.getElementById('searchName').value = name;
+			}
+		})
+	</script>
+</head>
+
+<body>
+	<div id="wrapper">
+    <h1>Поиск по имени</h1>
+
+	<form action="javascript:void(0)" style="display: flex; align-items: center;" autocomplete="off">
+		<label for="searchName">Имя сотрудника</label>
+		<input type="text" id="searchName" name="searchName">
+		<div class="formbutton">
+			<button type="submit">
+				<span>Сохранить</span>
+			</button>
+		</div>
+	</form>
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+***********************************************************************
+*         Copyright (C) 1996-1997 Texas Instruments Incorporated
+*                      All Rights Reserved
+*         IIR6 ASSEMBLY OPTIMIZER SOURCE - Example 5-26
+*         From Programmer's Guide
+***********************************************************************
+********* ASSEMBLY OPTIMIZER CODE: *******************
+
+        .def _iir_sa
+
+_iir_sa: .cproc  x, y, c1, c2, c3
+
+        .reg    xi, xi1, yi1
+	.reg	p0, p1, p2, s0, s1, cntr
+ 
+        MVK     100,cntr		; cntr = 100
+
+	LDH	.D2	*y++,yi1	; yi+1
+
+LOOP:   .trip 100
+	LDH	.D1	*x++,xi		; xi
+	MPY	.M1	c1,xi,p0	; c1 * xi
+	LDH	.D1	*x,xi1		; xi+1
+	MPY	.M1X	c2,xi1,p1	; c2 * xi+1
+	ADD	.L1	p0,p1,s0	; c1 * xi + c2 * xi+1
+	MPY	.M2X	c3,yi1,p2	; c3 * yi
+	ADD	.L2X	s0,p2,s1	; c1 * xi + c2 * xi+1 + c3 * yi
+	SHR	.S2	s1,15,yi1	; yi+1
+	STH	.D2	yi1,*y++	; store yi+1
+[cntr]	SUB	.L1	cntr,1,cntr	; decrement loop counter
+[cntr] 	B	.S1	LOOP		; branch to loop
+
+        .endproc

@@ -1,0 +1,658 @@
+@import url(../assets/fonts/fonts.css);
+
+:root {
+    --main-color: #1E1E1E;
+    --svg-color: invert(100%) sepia(100%) saturate(0%) hue-rotate(43deg) brightness(104%) contrast(105%);
+    color: white
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    color: white;
+}
+
+#svg {
+    filter: var(--svg-color);
+    width: 30px;
+    height: 30px;
+    transition: width 0.2s, height 0.2s;
+}
+
+header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    background-color: var(--main-color);
+    padding: 10px;
+    border-bottom: 1px solid rgb(255, 255, 255, 0.5)
+}
+
+header .logo {
+    display: flex;
+    align-items: end;
+    gap: 10px;
+}
+
+header .logo img {
+    width: 85px;
+    height: 150px;
+    cursor: pointer;
+}
+
+header .logo .text {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat Light', sans-serif;
+    font-size: 18px;
+    transition: font-size 0.2s;
+}
+
+header .logo h1 {
+    font-family: 'Montserrat Medium', sans-serif;
+    font-size: 28px;
+    transition: font-size 0.2s;
+}
+
+header button {
+    border: 1px solid var(--main-color);
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 22px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: font-size 0.2s;
+}
+
+header button #svg {
+    filter: none;
+}
+
+header button:hover {
+    background-color: var(--main-color);
+    color: white;
+    border: 1px solid white;
+}
+
+header button:hover #svg {
+    filter: var(--svg-color);
+}
+
+nav {
+    background-color: var(--main-color);
+    display: flex;
+    gap: 20px;
+    padding: 8px 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    white-space: nowrap;
+    transition: font-size 0.2s;
+}
+
+nav .active {
+    border-bottom: 2px solid white;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+nav a #svg {
+    width: 25px;
+    height: 25px;
+}
+
+nav button {
+    border: none;
+    outline: none;
+    background-color: white;
+    border-radius: 10px;
+}
+
+nav button #svg {
+    width: 40px;
+    height: 40px;
+    display: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    filter: none;
+}
+
+nav button #svg.rotate {
+    transform: rotate(-180deg);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100vh - 216px);
+    overflow-y: auto;
+    padding-top: 20px;
+}
+
+.sidebar {
+    position: fixed;
+    background-color: var(--main-color);
+    left: -300px;
+    width: 300px;
+    height: 100%;
+    z-index: 10;
+    border-right: 1px solid white;
+    transition: left 0.3s ease-out, width 0.3s ease-out;
+}
+
+.sidebar nav {
+    flex-direction: column;
+}
+
+.sidebar nav a {
+    display: flex;
+}
+
+main table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    flex-grow: 1;
+}
+
+main table td,
+main table th {
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 28px;
+    padding: 5px;
+    border-right: 1px solid black;
+    padding: 8px;
+    vertical-align: top;
+    text-align: center;
+    transition: font-size 0.2s;
+}
+
+main table th {
+    color: var(--main-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+main table td:last-child,
+main table th:last-child {
+    border-right: 0;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    background-color: var(--main-color);
+    border-radius: 10px;
+    padding: 5px 10px;
+    gap: 10px;
+    transition: opacity 0.2s ease-in-out;
+    height: 44px;
+}
+
+.task.checked {
+    opacity: 0.4;
+}
+
+.task .text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.task .delete_icon {
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    padding: 2px;
+    margin-left: auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.task .delete_icon #svg {
+    transition: filter 0.2s;
+}
+
+.delete_icon:hover {
+    background-color: white;
+}
+
+.delete_icon:hover #svg {
+    filter: none;
+}
+
+.customCheckbox {
+    position: relative;
+    cursor: pointer;
+}
+
+.customCheckbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkboxImage {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    position: relative;
+}
+
+.checkboxImage img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+    pointer-events: none;
+}
+
+.checkboxImage img.empty {
+    opacity: 1;
+}
+
+.customCheckbox input[type="checkbox"]:hover ~ .checkboxImage img.empty {
+    opacity: 0;
+}
+
+.customCheckbox input[type="checkbox"]:hover ~ .checkboxImage img.hover {
+    opacity: 1;
+}
+
+.customCheckbox input[type="checkbox"]:checked ~ .checkboxImage img.empty,
+.customCheckbox input[type="checkbox"]:checked ~ .checkboxImage img.hover {
+    opacity: 0;
+}
+
+.customCheckbox input[type="checkbox"]:checked ~ .checkboxImage img.complete {
+    opacity: 1;
+}
+
+main .wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: var(--main-color);
+    gap: 20px;
+    padding: 0 20px;
+}
+
+main .wrap .text {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat Light', sans-serif;
+    font-size: 24px;
+    transition: font-size 0.2s;
+}
+
+main .wrap h1 {
+    font-family: 'Montserrat Medium', sans-serif;
+    font-size: 32px;
+    transition: font-size 0.2s;
+}
+
+main .wrap img {
+    width: 200px;
+    height: 400px;
+}
+
+main .wrap .main_img {
+    width: 400px;
+    height: 400px;
+}
+
+dialog {
+    width: 30%;
+    min-width: 400px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+form {
+    color: var(--main-color);
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 24px;
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+    background-color: var(--main-color);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    gap: 20px;
+    transition: font-size 0.2s;
+}
+
+form input[type='text'] {
+    font-family: 'Montserrat Light', sans-serif;
+    font-size: 18px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    transition: font-size 0.2s;
+}
+
+form .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+form button {
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    padding: 5px;
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 22px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 30px;
+    transition: font-size 0.2s;
+}
+
+form button #svg {
+    filter: none;
+}
+
+form button:hover {
+    background-color: var(--main-color);
+    color: white;
+    border: 1px solid white;
+}
+
+form button:hover #svg {
+    filter: var(--svg-color);
+}
+
+.images {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    bottom: 0;
+    margin-top: auto;
+}
+
+.images img {
+    border-radius: 50%;
+    width: 200px;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: var(--main-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: 'Montserrat Light', sans-serif;
+    font-size: 22px;
+    z-index: 1000;
+    transition: font-size 0.2s;
+}
+
+.error_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.error_wrap h1 {
+    color: var(--main-color);
+    font-family: 'Montserrat Medium', sans-serif;
+    font-size: 36px;
+}
+
+.error_wrap button {
+    border: 1px solid var(--main-color);
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 22px;
+    background-color: var(--main-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: font-size 0.2s;
+}
+
+.error_wrap img {
+    height: 60vh;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    #svg {
+        width: 25px;
+        height: 25px;
+    }
+    
+    header .logo .text {
+        font-size: 14px;
+    }
+    
+    header .logo h1 {
+        font-size: 22px;
+    }
+    
+    header button {
+        font-size: 16px;
+    }
+
+    nav {
+        gap: 10px;
+    }
+    
+    nav a {
+        font-size: 18px;
+        display: none;
+        padding: 2px 5px;
+        border-radius: 20px;
+    }
+
+    nav .active #svg {
+        filter: none;
+    }
+
+    nav .active {
+        border: none;
+        background-color: white;
+        color: var(--main-color);
+    }
+    
+    nav button #svg {
+        display: block;
+    }
+    
+    main {
+        height: calc(100vh - 230px);
+    }
+
+    main .wrap {
+        flex-direction: column;
+    }
+
+    main .wrap .text {
+        font-size: 20px;
+    }
+    
+    main .wrap h1 {
+        font-size: 28px;
+    }
+    
+    .sidebar.visible {
+        left: 0;
+    }
+    
+    main table td,
+    main table th {
+        font-size: 22px;
+    }
+
+    dialog {
+        width: 350px;
+        min-width: 0;
+    }
+    
+    form {
+        font-size: 20px;
+    }
+    
+    form input[type='text'] {
+        font-size: 14px;
+    }
+    
+    form button {
+        font-size: 16px;
+    }
+    
+    .images img {
+        width: 150px;
+    }
+    
+    .tooltip {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 425px) {
+    header .logo .text {
+        font-size: 12px;
+    }
+    
+    header .logo h1 {
+        font-size: 20px;
+    }
+    
+    header button {
+        padding: 2px;
+    }
+    
+    header button #svg {
+        width: 30px;
+        height: 30px;
+    }
+    
+    header button span {
+        display: none;
+    }
+
+    nav a {
+        font-size: 0;
+        border-radius: 50%;
+        justify-content: center;
+        padding: 2px;
+    }
+
+    main {
+        height: calc(100vh - 216px);
+        align-items: normal;
+    }
+
+    main table {
+        width: 800px;
+    }
+
+    .sidebar {
+        width: 70px;
+    }
+    
+    main table td,
+    main table th {
+        font-size: 20px;
+    }
+
+    dialog {
+        width: 300px;
+    }
+    
+    form {
+        font-size: 18px;
+    }
+    
+    form input[type='text'] {
+        font-size: 12px;
+    }
+    
+    form .buttons {
+        flex-direction: column;
+    }
+
+    form button {
+        font-size: 14px;
+    }
+    
+    .images img {
+        width: 130px;
+    }
+
+    main .wrap .main_img {
+        width: 100%;
+    }
+    
+    .tooltip {
+        font-size: 12px;
+    }
+}

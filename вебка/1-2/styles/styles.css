@@ -1,0 +1,356 @@
+@import url(../assets/fonts/fonts.css);
+
+:root {
+    --main-color: #1E1E1E;
+    --svg-color: invert(100%) sepia(100%) saturate(0%) hue-rotate(43deg) brightness(104%) contrast(105%);
+    color: white
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    color: white;
+}
+
+#svg {
+    filter: var(--svg-color);
+    width: 30px;
+    height: 30px;
+    transition: width 0.2s, height 0.2s;
+}
+
+header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    background-color: var(--main-color);
+    padding: 10px;
+}
+
+header .logo {
+    display: flex;
+    align-items: end;
+    gap: 10px;
+}
+
+header .logo img {
+    width: 85px;
+    height: 150px;
+    cursor: pointer;
+}
+
+header .logo .text {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat Light', sans-serif;
+    font-size: 18px;
+    transition: font-size 0.2s;
+}
+
+header .logo h1 {
+    font-family: 'Montserrat Medium', sans-serif;
+    font-size: 28px;
+    transition: font-size 0.2s;
+}
+
+header button {
+    border: 1px solid var(--main-color);
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 22px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: font-size 0.2s;
+}
+
+header button #svg {
+    filter: none;
+}
+
+header button:hover {
+    background-color: var(--main-color);
+    color: white;
+    border: 1px solid white;
+}
+
+header button:hover #svg {
+    filter: var(--svg-color);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100vh - 170px);
+    overflow-y: auto;
+    padding-top: 20px;
+}
+
+main table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    flex-grow: 1;
+}
+
+main table td,
+main table th {
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 28px;
+    padding: 5px;
+    border-right: 1px solid black;
+    padding: 8px;
+    vertical-align: top;
+    text-align: center;
+    transition: font-size 0.2s;
+}
+
+main table th {
+    color: var(--main-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+main table td:last-child,
+main table th:last-child {
+    border-right: 0;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    background-color: var(--main-color);
+    border-radius: 10px;
+    padding: 5px 10px;
+    gap: 10px;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.task.checked {
+    opacity: 0.4;
+}
+
+.task .text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.task .delete_icon {
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    padding: 2px;
+    margin-left: auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.task .delete_icon #svg {
+    transition: filter 0.2s;
+}
+
+.delete_icon:hover {
+    background-color: white;
+}
+
+.delete_icon:hover #svg {
+    filter: none;
+}
+
+.customCheckbox {
+    position: relative;
+    cursor: pointer;
+}
+
+.customCheckbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkboxImage {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    position: relative;
+}
+
+.checkboxImage img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+    pointer-events: none;
+}
+
+.checkboxImage img.empty {
+    opacity: 1;
+}
+
+.customCheckbox input[type="checkbox"]:hover ~ .checkboxImage img.empty {
+    opacity: 0;
+}
+
+.customCheckbox input[type="checkbox"]:hover ~ .checkboxImage img.hover {
+    opacity: 1;
+}
+
+.customCheckbox input[type="checkbox"]:checked ~ .checkboxImage img.empty,
+.customCheckbox input[type="checkbox"]:checked ~ .checkboxImage img.hover {
+    opacity: 0;
+}
+
+.customCheckbox input[type="checkbox"]:checked ~ .checkboxImage img.complete {
+    opacity: 1;
+}
+
+form {
+    color: var(--main-color);
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 24px;
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+    background-color: var(--main-color);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 300px;
+    gap: 20px;
+    transition: font-size 0.2s;
+}
+
+form input[type='text'] {
+    font-family: 'Montserrat Light', sans-serif;
+    font-size: 18px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    transition: font-size 0.2s;
+}
+
+form button {
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    padding: 5px;
+    font-family: 'Montserrat Regular', sans-serif;
+    font-size: 22px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: font-size 0.2s;
+}
+
+form button #svg {
+    filter: none;
+}
+
+form button:hover {
+    background-color: var(--main-color);
+    color: white;
+    border: 1px solid white;
+}
+
+form button:hover #svg {
+    filter: var(--svg-color);
+}
+
+.images {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    bottom: 0;
+    margin-top: auto;
+}
+
+.images img {
+    border-radius: 50%;
+    width: 200px;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: var(--main-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: 'Montserrat Light', sans-serif;
+    font-size: 22px;
+    z-index: 1000;
+    transition: font-size 0.2s;
+}
+
+@media (max-width: 768px) {
+    #svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    header .logo .text {
+        font-size: 14px;
+    }
+    
+    header .logo h1 {
+        font-size: 22px;
+    }
+
+    header button {
+        font-size: 16px;
+    }
+
+    main table td,
+    main table th {
+        font-size: 22px;
+    }
+
+    form {
+        font-size: 20px;
+    }
+
+    form input[type='text'] {
+        font-size: 14px;
+    }
+    
+    form button {
+        font-size: 16px;
+    }
+
+    .images img {
+        width: 150px;
+    }
+
+    .tooltip {
+        font-size: 14px;
+    }
+}

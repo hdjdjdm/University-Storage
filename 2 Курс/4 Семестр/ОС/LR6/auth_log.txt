@@ -1,0 +1,4 @@
+апр. 02, 2024 10:36:39 AM my.AuthGUI actionPerformed
+INFO: Registered new user. Username: Test	Password: 123
+апр. 02, 2024 10:36:44 AM my.AuthGUI actionPerformed
+INFO: Successfully login to Test

@@ -1,0 +1,120 @@
+***********************************************************************
+*         Copyright (C) 1996-1997 Texas Instruments Incorporated
+*                      All Rights Reserved
+*         FIR13 ASSEMBLY OPTIMIZER SOURCE - Example 5-58
+*         From Programmer's Guide
+***********************************************************************
+********* ASSEMBLY OPTIMIZER CODE: *******************
+
+        .def _fir_sa
+
+_fir_sa: .cproc   x, h, y
+
+        .reg    x_1, h_1, y_1, octr, pctr, sctr
+	.reg	sum01, sum02, sum03, sum04, sum05, sum06, sum07
+	.reg	sum11, sum12, sum13, sum14, sum15, sum16, sum17
+	.reg	p00, p01, p02, p03, p04, p05, p06, p07
+	.reg	p10, p11, p12, p13, p14, p15, p16, p17
+	.reg	x01b, x01, x23, x45, x67, x8, h01, h23, h45, h67
+	.reg	y0, y1, rstx1, rstx2, rsth1, rsth2
+ 
+	ADD	x,4,x_1			; point to x[2]
+	ADD	h,4,h_1			; point to h[2]
+	ADD	y,2,y_1			; point to y[1]
+	MVK	60,rstx1		; used to rst x pointer each outer loop
+	MVK	60,rstx2		; used to rst x pointer each outer loop
+	MVK	64,rsth1		; used to rst h pointer each outer loop
+	MVK	64,rsth2		; used to rst h pointer each outer loop
+        MVK     201,octr		; loop ctr = 201 = (100/2) * (32/8) + 1
+	MVK	4,pctr			; pointer reset lp cntr = 32/8
+	MVK	5,sctr			; reset store lp cntr = 32/8 + 1
+	ZERO	sum07			; sum07 = 0
+	ZERO	sum17			; sum17 = 0
+		
+        .mptr   x,   x+0
+        .mptr   x_1, x+4
+        .mptr   h,   h+0
+        .mptr   h_1, h+4
+
+LOOP:   .trip 8
+
+
+	LDW	.D1T1	*h++[2],h01		; h[i+0] & h[i+1]
+	LDW	.D2T2	*h_1++[2],h23		; h[i+2] & h[i+3]
+	LDW	.D1T1	*h++[2],h45		; h[i+4] & h[i+5]
+	LDW	.D2T2	*h_1++[2],h67		; h[i+6] & h[i+7]
+
+	LDW	.D2T1	*x++[2],x01		; x[j+i+0] & x[j+i+1]
+	LDW	.D1T2	*x_1++[2],x23		; x[j+i+2] & x[j+i+3]
+	LDW	.D2T1	*x++[2],x45		; x[j+i+4] & x[j+i+5]
+	LDW	.D1T2	*x_1++[2],x67		; x[j+i+6] & x[j+i+7]
+	LDH	.D2T1	*x,x8			; x[j+i+8]
+
+ [sctr]	SUB	.S1	sctr,1,sctr		; dec store lp cntr
+[!sctr]	SHR	.S1	sum07,15,y0		; (sum0 >> 15)
+[!sctr]	SHR	.S2	sum17,15,y1		; (sum1 >> 15)
+[!sctr]	STH	.D1	y0,*y++[2]		; y[j] = (sum0 >> 15)
+[!sctr]	STH	.D2	y1,*y_1++[2]		; y[j+1] = (sum1 >> 15)
+
+	MV	.L2X	x01,x01b		; move to other reg file
+	MPYLH	.M2X	h01,x01b,p10		; p10 = h[i+0]*x[j+i+1]
+[sctr]	ADD	.L2	p10,sum17,p10		; sum1(p10) = p10 + sum1
+
+	MPYHL	.M1X	h01,x23,p11		; p11 = h[i+1]*x[j+i+2]
+	ADD	.L2X	p11,p10,sum11		; sum1 += p11
+
+	MPYLH	.M2	h23,x23,p12		; p12 = h[i+2]*x[j+i+3]
+	ADD	.L2	p12,sum11,sum12		; sum1 +=  p12
+
+	MPYHL	.M1X	h23,x45,p13		; p13 = h[i+3]*x[j+i+4]
+	ADD	.L2X	p13,sum12,sum13		; sum1 += p13
+
+	MPYLH	.M1	h45,x45,p14		; p14 = h[i+4]*x[j+i+5]
+ 	ADD	.L2X	p14,sum13,sum14		; sum1 += p14
+
+	MPYHL	.M2X	h45,x67,p15		; p15 = h[i+5]*x[j+i+6]
+ 	ADD	.S2	p15,sum14,sum15		; sum1 += p15
+
+	MPYLH	.M2	h67,x67,p16		; p16 = h[i+6]*x[j+i+7]
+ 	ADD	.L2	p16,sum15,sum16		; sum1 += p16
+
+	MPYHL	.M1X	h67,x8,p17		; p17 = h[i+7]*x[j+i+8]
+ 	ADD	.L2X	p17,sum16,sum17		; sum1 += p17
+
+ 	MPY	.M1	h01,x01,p00		; p00 = h[i+0]*x[j+i+0]
+[sctr]	ADD	.L1	p00,sum07,p00		; sum0(p00) = p00 + sum0
+
+	MPYH	.M1	h01,x01,p01		; p01 = h[i+1]*x[j+i+1]
+ 	ADD	.L1	p01,p00,sum01		; sum0 += p01
+
+	MPY	.M2	h23,x23,p02		; p02 = h[i+2]*x[j+i+2]
+ 	ADD	.L1X	p02,sum01,sum02		; sum0 += p02
+
+	MPYH	.M2	h23,x23,p03		; p03 = h[i+3]*x[j+i+3]
+ 	ADD	.L1X	p03,sum02,sum03		; sum0 += p03
+
+	MPY	.M1	h45,x45,p04		; p04 = h[i+4]*x[j+i+4]
+ 	ADD	.L1	p04,sum03,sum04		; sum0 += p04
+
+	MPYH	.M1	h45,x45,p05		; p05 = h[i+5]*x[j+i+5]
+	ADD	.L1	p05,sum04,sum05		; sum0 += p05
+
+	MPY	.M2	h67,x67,p06		; p06 = h[i+6]*x[j+i+6]
+ 	ADD	.L1X	p06,sum05,sum06		; sum0 += p06
+
+	MPYH	.M2	h67,x67,p07		; p07 = h[i+7]*x[j+i+7]
+ 	ADD	.L1X	p07,sum06,sum07		; sum0 += p07
+
+[!sctr]	MVK	.S1	4,sctr			; reset store lp cntr
+
+ [pctr]	SUB	.S1	pctr,1,pctr		; dec pointer reset lp cntr
+[!pctr]	SUB	.S2	x,rstx2,x		; reset x ptr
+[!pctr]	SUB	.S1	x_1,rstx1,x_1		; reset x_1 ptr
+[!pctr]	SUB	.S1	h,rsth1,h		; reset h ptr
+[!pctr]	SUB	.S2	h_1,rsth2,h_1		; reset h_1 ptr
+[!pctr]	MVK	.S1	4,pctr			; reset pointer reset lp cntr
+
+ [octr]	SUB	.S2	octr,1,octr		; dec outer lp cntr
+ [octr]	B	.S2	LOOP			; Branch outer loop
+
+        .endproc
