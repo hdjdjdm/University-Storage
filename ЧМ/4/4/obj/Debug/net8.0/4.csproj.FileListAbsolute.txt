@@ -1,0 +1,15 @@
+M:\ucheba\ЧМ\4\4\bin\Debug\net8.0\4.exe
+M:\ucheba\ЧМ\4\4\bin\Debug\net8.0\4.deps.json
+M:\ucheba\ЧМ\4\4\bin\Debug\net8.0\4.runtimeconfig.json
+M:\ucheba\ЧМ\4\4\bin\Debug\net8.0\4.dll
+M:\ucheba\ЧМ\4\4\bin\Debug\net8.0\4.pdb
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\4.GeneratedMSBuildEditorConfig.editorconfig
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\4.AssemblyInfoInputs.cache
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\4.AssemblyInfo.cs
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\4.csproj.CoreCompileInputs.cache
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\4.sourcelink.json
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\4.dll
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\refint\4.dll
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\4.pdb
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\4.genruntimeconfig.cache
+M:\ucheba\ЧМ\4\4\obj\Debug\net8.0\ref\4.dll
