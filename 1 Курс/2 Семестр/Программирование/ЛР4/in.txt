@@ -1,6 +1,0 @@
-5
-Ivanov Vasiliy 4 3 4
-Petrov Sergey 5 3 5
-Morzykov Maxim 5 5 5
-Konstantinov Nikolay 4 4 5
-Kuznetsov Ivan 5 5 5
