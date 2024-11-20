@@ -24,7 +24,8 @@ class Program
             Console.WriteLine($"x[{i}] = {x[i]}");
         }
 
-        double[] regularizedSolution = regul(2, A, B);
+        double[] initialGuess = Gauss(A, B);
+        double[] regularizedSolution = regul(2, A, B, initialGuess); // Задаем начальные приближения
 
         Console.WriteLine("\nРегуляризованное решение системы уравнений:");
         for (int i = 0; i < regularizedSolution.Length; i++)
@@ -81,11 +82,11 @@ class Program
         return x;
     }
 
-    static double[] regul(int n, double[,] a, double[] b)
+    static double[] regul(int n, double[,] a, double[] b, double[] x0)
     {
         double[] result;
         double[,] a1 = new double[n, n], a2 = new double[n, n];
-        double[] b1 = new double[n], x0 = new double[n];
+        double[] b1 = new double[n];
         double eps = 0.005;
         double s;
         int k;
@@ -113,15 +114,14 @@ class Program
             b1[i] = s;
         }
 
-        double alfa = 0;
+        double alfa = 0.001;
         k = 0;
-        double[] b2 = new double[n];
-        b2 = vozm(n, eps, b2);
+        double[] b2 = vozm(n, eps, b1);
         double max;
 
         do
         {
-            alfa += 0.00000001;
+            alfa += 0.0001;
             a2 = a1;
             for (int i = 0; i < n; i++)
             {
@@ -142,7 +142,7 @@ class Program
             max = Math.Abs(b2[1] - result[1]);
             for (int i = 1; i < n; i++)
             {
-                if (Math.Abs(b2[1] - result[1]) > max)
+                if (Math.Abs(b2[i] - result[i]) > max)
                 {
                     max = Math.Abs(b2[i] - result[i]);
                 }
@@ -188,7 +188,7 @@ class Program
         double[] b2 = new double[n];
         for (int i = 0; i < n; i++)
         {
-            b2[i] = b2[i] + eps;
+            b2[i] = b[i] + eps;
         }
         return b2;
     }
