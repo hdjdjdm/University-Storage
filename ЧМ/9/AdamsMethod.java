@@ -1,57 +1,64 @@
 
 public class AdamsMethod {
-    
-    interface Function {
-        double evaluate(double y1, double y2);
-    }
-
     public static void main(String[] args) {
         double a = 1.0;
         double b = 4.0;
         int n = 10;
-        double x0 = a;
-        double h = (b - a) / n; 
+        double h = (b - a) / n;
 
-        Function[] TFMas = new Function[2];
-        TFMas[0] = (y1, y2) -> Math.atan(1 / (1 + Math.pow(y1, 2)) + Math.pow(y2, 2));
-        TFMas[1] = (y1, y2) -> Math.sin(y1 * y2);
+        double y1 = 1.0; 
+        double y2 = 1.0;
 
-        double[] y = new double[2];
-        y[0] = 1.0; 
-        y[1] = 1.0; 
+        double[][] ys = new double[n + 1][2];
+        ys[0][0] = y1;
+        ys[0][1] = y2;
 
-        double[] result = adamsMethod(TFMas, y, x0, h, n);
+        for (int i = 1; i <= 3; i++) {
+            double k11 = h * f1(y1, y2);
+            double k21 = h * f2(y1, y2);
 
-        System.out.println("Приближенное решение:");
-        for (int i = 0; i < result.length; i += 2) {
-            System.out.printf("x = %.2f: y1 = %.4f; y2 = %.4f\n", a + i * h, result[i], result[i + 1]);
+            double k12 = h * f1(y1 + 0.5 * k11, y2 + 0.5 * k21);
+            double k22 = h * f2(y1 + 0.5 * k11, y2 + 0.5 * k21);
+
+            double k13 = h * f1(y1 + 0.5 * k12, y2 + 0.5 * k22);
+            double k23 = h * f2(y1 + 0.5 * k12, y2 + 0.5 * k22);
+
+            double k14 = h * f1(y1 + k13, y2 + k23);
+            double k24 = h * f2(y1 + k13, y2 + k23);
+
+            y1 += (k11 + 2 * k12 + 2 * k13 + k14) / 6;
+            y2 += (k21 + 2 * k22 + 2 * k23 + k24) / 6;
+
+            ys[i][0] = y1;
+            ys[i][1] = y2;
+        }
+
+        for (int i = 3; i < n; i++) {
+            double f1n = f1(ys[i][0], ys[i][1]);
+            double f1n1 = f1(ys[i - 1][0], ys[i - 1][1]);
+            double f1n2 = f1(ys[i - 2][0], ys[i - 2][1]);
+
+            double f2n = f2(ys[i][0], ys[i][1]);
+            double f2n1 = f2(ys[i - 1][0], ys[i - 1][1]);
+            double f2n2 = f2(ys[i - 2][0], ys[i - 2][1]);
+
+            y1 = ys[i][0] + h * (23 * f1n - 16 * f1n1 + 5 * f1n2) / 12;
+            y2 = ys[i][1] + h * (23 * f2n - 16 * f2n1 + 5 * f2n2) / 12;
+
+            ys[i + 1][0] = y1;
+            ys[i + 1][1] = y2;
+        }
+
+        for (int i = 0; i <= n; i++) {
+            System.out.printf("Шаг %d: y1 = %.6f, y2 = %.6f%n", i, ys[i][0], ys[i][1]);
         }
     }
 
-    public static double[] adamsMethod(Function[] f, double[] y, double x0, double h, int n) {
-        double[] results = new double[2 * (n + 1)];
-        results[0] = y[0];
-        results[1] = y[1];
+    public static double f1(double y1, double y2) {
+        return Math.atan(1 / (1 + Math.pow(y1, 2)) + Math.pow(y2, 2));
+    }
 
-        for (int i = 1; i <= 2; i++) {
-            double x = x0 + (i - 1) * h;
-            double k1Y1 = h * f[0].evaluate(results[2 * (i - 1)], results[2 * (i - 1) + 1]);
-            double k1Y2 = h * f[1].evaluate(results[2 * (i - 1)], results[2 * (i - 1) + 1]);
-            results[2 * i] = results[2 * (i - 1)] + k1Y1;
-            results[2 * i + 1] = results[2 * (i - 1) + 1] + k1Y2;
-        }
-
-        for (int i = 2; i < n; i++) {
-            double x = x0 + i * h;
-            double f1Prev = f[0].evaluate(results[2 * (i - 1)], results[2 * (i - 1) + 1]);
-            double f1Prev2 = f[0].evaluate(results[2 * (i - 2)], results[2 * (i - 2) + 1]);
-            double f2Prev = f[1].evaluate(results[2 * (i - 1)], results[2 * (i - 1) + 1]);
-            double f2Prev2 = f[1].evaluate(results[2 * (i - 2)], results[2 * (i - 2) + 1]);
-
-            results[2 * (i + 1)] = results[2 * i] + (h / 2) * (f1Prev + f1Prev2);
-            results[2 * (i + 1) + 1] = results[2 * i + 1] + (h / 2) * (f2Prev + f2Prev2);
-        }
-
-        return results;
+    public static double f2(double y1, double y2) {
+        return Math.sin(y1 * y2);
     }
 }
